@@ -1,23 +1,36 @@
 ﻿version: "3.7"
 
 services:
-
-  reverseproxy:
-    build:
-      context: ./nginx
-      dockerfile: nginx.Dockerfile
+  nginx-proxy:
     ports:
-      - "80:80"
-    restart: always
+      - '80:80'
+      - '443:443'
+    container_name: nginx-proxy
+    privileged: true
+    environment:
+      - ENABLE_IPV6=true
+    volumes:
+      - '~/nginx/vhost.d:/etc/nginx/vhost.d'
+      - '~/nginx-certs:/etc/nginx/certs:ro'
+      - '~/nginx-conf:/etc/nginx/conf.d'
+      - '~/nginx-logs:/var/log/nginx'
+      - /usr/share/nginx/html
+      - '/var/run/docker.sock:/tmp/docker.sock:ro'
+    image: jwilder/nginx-proxy
+
+  letsencrypt-nginx-proxy-companion:
+    privileged: true
+    volumes:
+      - '~/nginx/vhost.d:/etc/nginx/vhost.d'
+      - '~/nginx-certs:/etc/nginx/certs:rw'
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    image: jrcs/letsencrypt-nginx-proxy-companion
 
   api:
-    env_file:
-      - discordbot.env #fillin the variable in the discordbot.env.sample and rename the file
-    depends_on:
-      - reverseproxy
+    environment:
+      - VIRTUAL_HOST=kahdeg.ddns.net
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=kahdeg.ddns.net
+      - LETSENCRYPT_EMAIL=blog@demo.viettranx.com
     image: kahdeg/yt_timestamp_bot:latest
-    volumes:
-      - $HOME/yt_ts_docker:/etc/yt_ts
-    expose:
-      - "5000"
     restart: always

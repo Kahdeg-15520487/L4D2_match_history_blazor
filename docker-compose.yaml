@@ -1,24 +1,53 @@
 ﻿version: "3.7"
 
 services:
-
-  reverseproxy:
-    build:
-      context: ./nginx
-      dockerfile: nginx.Dockerfile
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
     ports:
       - "80:80"
-    restart: always
+      - "443:443"
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    network_mode: bridge
+
+  acme-companion:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    environment: 
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    network_mode: bridge
 
   api:
-    depends_on:
-      - reverseproxy
     environment:
-        - ASPNETCORE_URLS=http://+:5000
-    ports:
-        - "5000:5000"
-        - "5001:5001"
+      - VIRTUAL_HOST=kahdeg.ddns.net
+      - VIRTUAL_PORT=443
+      - VIRTUAL_PROTO=https
+      - LETSENCRYPT_HOST=kahdeg.ddns.net
+      - LETSENCRYPT_EMAIL=jonhenry1324@gmail.com
+    # image: kahdeg/L4D2_match_history:latest
     build:
       context: .
       dockerfile: L4D2_match_history/Server/Dockerfile
     restart: always
+    depends_on:
+      - nginx-proxy
+      - acme-companion
+    network_mode: bridge
+
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+  acme:

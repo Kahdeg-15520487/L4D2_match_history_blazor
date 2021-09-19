@@ -1,0 +1,24 @@
+﻿version: "3.7"
+
+services:
+
+  reverseproxy:
+    build:
+      context: ./nginx
+      dockerfile: nginx.Dockerfile
+    ports:
+      - "80:80"
+    restart: always
+
+  api:
+    depends_on:
+      - reverseproxy
+    environment:
+        - ASPNETCORE_URLS=http://+:5000
+    ports:
+        - "5000:5000"
+        - "5001:5001"
+    build:
+      context: .
+      dockerfile: L4D2_match_history/Server/Dockerfile
+    restart: always
