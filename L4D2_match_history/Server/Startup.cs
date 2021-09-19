@@ -1,3 +1,6 @@
+using L4D2_match_history.Server.Services;
+using L4D2_match_history.Server.Services.Contract;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,6 +26,7 @@ namespace L4D2_match_history.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IUpdateDataService, UpdateDataService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -43,7 +47,7 @@ namespace L4D2_match_history.Server
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 

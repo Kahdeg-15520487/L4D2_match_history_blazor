@@ -1,0 +1,1 @@
+docker build . -f L4D2_match_history/Server/Dockerfile -t l4d2_match_history_blazor_api:latest

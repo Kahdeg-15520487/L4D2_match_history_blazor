@@ -12,6 +12,10 @@
 {
     <p><em>Loading...</em></p>
 }
+else if (matchs.Length == 0)
+{
+    <p><em>Please refresh page to fetch new data...</em></p>
+}
 else
 {
     <table class="table">
@@ -39,12 +43,17 @@ else
 
 @code {
     private MatchInfo[] matchs;
-    private bool IsSortedAscending = true;
+    private bool IsSortedAscending = false;
     private string sortDirection => IsSortedAscending ? "^" : "v";
 
     protected override async Task OnInitializedAsync()
     {
         matchs = await Http.GetFromJsonAsync<MatchInfo[]>("MatchInfo");
+        matchs = matchs.OrderByDescending(m => m.PlayDate).ToArray();
+        if (matchs.Length == 0)
+        {
+            await Http.PutAsync("MatchInfo", null);
+        }
     }
 
     protected void SortTableByDate()

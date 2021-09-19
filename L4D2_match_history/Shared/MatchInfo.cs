@@ -8,6 +8,17 @@ namespace L4D2_match_history.Shared
 {
     public class MatchInfo
     {
+        public MatchInfo(string mapName, string[] players, DateTime playDate, string url, string thumbnail)
+        {
+            this.MapName = mapName;
+            this.Players = players;
+            this.PlayDate = playDate;
+            this.VideoUrl = url;
+            this.VideoThumbnail = thumbnail;
+        }
+
+        public MatchInfo() { }
+
         public string MapName { get; set; }
         public string[] Players { get; set; }
         public DateTime PlayDate { get; set; }
