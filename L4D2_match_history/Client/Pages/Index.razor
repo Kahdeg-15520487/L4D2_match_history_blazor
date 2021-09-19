@@ -1,0 +1,79 @@
+﻿@page "/"
+@using L4D2_match_history.Shared
+@using System.Linq
+@using Microsoft.AspNetCore.Components.Web
+@inject HttpClient Http
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (matchs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th><span class="sort-link" @onclick="() => SortTableByDate()">Date<label>@sortDirection</label></span></th>
+                <th>Map</th>
+                <th>Players</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var match in matchs)
+            {
+                <tr>
+                    <td>@match.PlayDate.ToShortDateString()</td>
+                    <td>@match.MapName</td>
+                    <td>@string.Join(", ", match.Players)</td>
+                    <td><a href="@match.VideoUrl">@match.VideoUrl</a><br /><img src="@match.VideoThumbnail" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private MatchInfo[] matchs;
+    private bool IsSortedAscending = true;
+    private string sortDirection => IsSortedAscending ? "^" : "v";
+
+    protected override async Task OnInitializedAsync()
+    {
+        matchs = await Http.GetFromJsonAsync<MatchInfo[]>("MatchInfo");
+    }
+
+    protected void SortTableByDate()
+    {
+        SortTable("PlayDate");
+    }
+
+    protected void SortTable(string columnName)
+    {
+
+        if (IsSortedAscending)
+        {
+            matchs = matchs.OrderByDescending(x =>
+                                          x.GetType()
+                                           .GetProperty(columnName)
+                                           .GetValue(x, null))
+                                           .ToArray();
+        }
+        else
+        {
+            matchs = matchs.OrderBy(x =>
+                                x.GetType()
+                                 .GetProperty(columnName)
+                                 .GetValue(x, null))
+                                 .ToArray();
+        }
+
+        //Toggle this boolean
+        IsSortedAscending = !IsSortedAscending;
+    }
+
+}

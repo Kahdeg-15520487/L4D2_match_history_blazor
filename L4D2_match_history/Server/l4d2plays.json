@@ -1,0 +1,605 @@
+[
+  {
+    "MapName": "Dead Center",
+    "Players": [
+      "Minh",
+      "MyNa"
+    ],
+    "PlayDate": "2021-07-30T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=cIkFVL82n5s",
+    "VideoThumbnail": "https://i.ytimg.com/vi/cIkFVL82n5s/hqdefault.jpg"
+  },
+  {
+    "MapName": "Swamp Fever",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita"
+    ],
+    "PlayDate": "2021-07-31T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=HFif-cWosg0",
+    "VideoThumbnail": "https://i.ytimg.com/vi/HFif-cWosg0/hqdefault.jpg"
+  },
+  {
+    "MapName": "The Passing",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita"
+    ],
+    "PlayDate": "2021-07-31T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=xCBsr2L8OxQ",
+    "VideoThumbnail": "https://i.ytimg.com/vi/xCBsr2L8OxQ/hqdefault.jpg"
+  },
+  {
+    "MapName": "Dark Carnival",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita"
+    ],
+    "PlayDate": "2021-07-31T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=0Hcn2IxQX7M",
+    "VideoThumbnail": "https://i.ytimg.com/vi/0Hcn2IxQX7M/hqdefault.jpg"
+  },
+  {
+    "MapName": "The Sacrifice",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita",
+      "Mỳ Tôm"
+    ],
+    "PlayDate": "2021-08-01T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=sfTDhGAGcAA",
+    "VideoThumbnail": "https://i.ytimg.com/vi/sfTDhGAGcAA/hqdefault.jpg"
+  },
+  {
+    "MapName": "The Parish",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita",
+      "Mỳ Tôm"
+    ],
+    "PlayDate": "2021-08-01T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=QWkHk7N-sJk",
+    "VideoThumbnail": "https://i.ytimg.com/vi/QWkHk7N-sJk/hqdefault.jpg"
+  },
+  {
+    "MapName": "Hard Rain",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita",
+      "Mỳ Tôm"
+    ],
+    "PlayDate": "2021-08-01T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=dILh1yWKcL0",
+    "VideoThumbnail": "https://i.ytimg.com/vi/dILh1yWKcL0/hqdefault.jpg"
+  },
+  {
+    "MapName": "No Mercy",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-02T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=KYwel4aDcyw",
+    "VideoThumbnail": "https://i.ytimg.com/vi/KYwel4aDcyw/hqdefault.jpg"
+  },
+  {
+    "MapName": "Crash Course",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "",
+      "Bita"
+    ],
+    "PlayDate": "2021-08-02T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=aIHVLF57sRE",
+    "VideoThumbnail": "https://i.ytimg.com/vi/aIHVLF57sRE/hqdefault.jpg"
+  },
+  {
+    "MapName": "Dead Air",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita"
+    ],
+    "PlayDate": "2021-08-03T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=TOwieTubdGg",
+    "VideoThumbnail": "https://i.ytimg.com/vi/TOwieTubdGg/hqdefault.jpg"
+  },
+  {
+    "MapName": "Death Toll",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita"
+    ],
+    "PlayDate": "2021-08-03T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=tPgkmrOYJi0",
+    "VideoThumbnail": "https://i.ytimg.com/vi/tPgkmrOYJi0/hqdefault.jpg"
+  },
+  {
+    "MapName": "Cold Stream",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita",
+      "T3"
+    ],
+    "PlayDate": "2021-08-04T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=NPK2I-a4BHQ",
+    "VideoThumbnail": "https://i.ytimg.com/vi/NPK2I-a4BHQ/hqdefault.jpg"
+  },
+  {
+    "MapName": "Blood Harvest",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita",
+      "T3"
+    ],
+    "PlayDate": "2021-08-04T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=3rg70kZDSpY",
+    "VideoThumbnail": "https://i.ytimg.com/vi/3rg70kZDSpY/hqdefault.jpg"
+  },
+  {
+    "MapName": "Urban Flight",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita"
+    ],
+    "PlayDate": "2021-08-06T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=JQ9xEKW3OXo",
+    "VideoThumbnail": "https://i.ytimg.com/vi/JQ9xEKW3OXo/hqdefault.jpg"
+  },
+  {
+    "MapName": "The Last Stand",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita"
+    ],
+    "PlayDate": "2021-08-06T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=dLWsplHhF38",
+    "VideoThumbnail": "https://i.ytimg.com/vi/dLWsplHhF38/hqdefault.jpg"
+  },
+  {
+    "MapName": "Zengcheng Guangzhou City",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-08T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=DZtLhYvcKww",
+    "VideoThumbnail": "https://i.ytimg.com/vi/DZtLhYvcKww/hqdefault.jpg"
+  },
+  {
+    "MapName": "Lockdown",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-08T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=4yRJi8ZfMrU",
+    "VideoThumbnail": "https://i.ytimg.com/vi/4yRJi8ZfMrU/hqdefault.jpg"
+  },
+  {
+    "MapName": "The Cure",
+    "Players": [
+      "Minh",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-10T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=HrPBbbPKq88",
+    "VideoThumbnail": "https://i.ytimg.com/vi/HrPBbbPKq88/hqdefault.jpg"
+  },
+  {
+    "MapName": "RMS Titanic",
+    "Players": [
+      "Minh",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-10T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=svJS7H5mb4o",
+    "VideoThumbnail": "https://i.ytimg.com/vi/svJS7H5mb4o/hqdefault.jpg"
+  },
+  {
+    "MapName": "Detour Ahead",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-13T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=4Y3d98EnkHI",
+    "VideoThumbnail": "https://i.ytimg.com/vi/4Y3d98EnkHI/hqdefault.jpg"
+  },
+  {
+    "MapName": "Dam it 2! The Director's Cut",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-13T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=bbJNkpVpsKo",
+    "VideoThumbnail": "https://i.ytimg.com/vi/bbJNkpVpsKo/hqdefault.jpg"
+  },
+  {
+    "MapName": "Dead Vacation",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa",
+      "Mỳ Tôm"
+    ],
+    "PlayDate": "2021-08-15T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=r6D8arwuYsI",
+    "VideoThumbnail": "https://i.ytimg.com/vi/r6D8arwuYsI/hqdefault.jpg"
+  },
+  {
+    "MapName": "Back to School",
+    "Players": [
+      "Minh",
+      "MyNa",
+      "Bita"
+    ],
+    "PlayDate": "2021-08-17T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=yxQfwa0EbHw",
+    "VideoThumbnail": "https://i.ytimg.com/vi/yxQfwa0EbHw/hqdefault.jpg"
+  },
+  {
+    "MapName": "Yama",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-18T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=V8vlhW9tsZQ",
+    "VideoThumbnail": "https://i.ytimg.com/vi/V8vlhW9tsZQ/hqdefault.jpg"
+  },
+  {
+    "MapName": "No More Industries Ext",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-19T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=SCyzoKaLUmY",
+    "VideoThumbnail": "https://i.ytimg.com/vi/SCyzoKaLUmY/hqdefault.jpg"
+  },
+  {
+    "MapName": "Whispers of Winter",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-21T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=ke5wHyQcwHk",
+    "VideoThumbnail": "https://i.ytimg.com/vi/ke5wHyQcwHk/hqdefault.jpg"
+  },
+  {
+    "MapName": "Resident Evil 3",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-22T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=O3ttMw_V_nw",
+    "VideoThumbnail": "https://i.ytimg.com/vi/O3ttMw_V_nw/hqdefault.jpg"
+  },
+  {
+    "MapName": "Warcelona",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-24T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=krhP3Po-C-s",
+    "VideoThumbnail": "https://i.ytimg.com/vi/krhP3Po-C-s/hqdefault.jpg"
+  },
+  {
+    "MapName": "Cambalache Buenos Aires",
+    "Players": [
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-25T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=GYFyyO3XwfY",
+    "VideoThumbnail": "https://i.ytimg.com/vi/GYFyyO3XwfY/hqdefault.jpg"
+  },
+  {
+    "MapName": "Suicide Blitz 2",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-26T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=WOr28NI9t8I",
+    "VideoThumbnail": "https://i.ytimg.com/vi/WOr28NI9t8I/hqdefault.jpg"
+  },
+  {
+    "MapName": "Day Break",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-26T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=1OZi_JvaRLk",
+    "VideoThumbnail": "https://i.ytimg.com/vi/1OZi_JvaRLk/hqdefault.jpg"
+  },
+  {
+    "MapName": "Gunk",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa",
+      "Vinh"
+    ],
+    "PlayDate": "2021-08-28T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=OQqG7_-hr0w",
+    "VideoThumbnail": "https://i.ytimg.com/vi/OQqG7_-hr0w/hqdefault.jpg"
+  },
+  {
+    "MapName": "2019 (Anniversary Edition)",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa",
+      "Vinh"
+    ],
+    "PlayDate": "2021-08-28T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=aHp9b-Kg69c",
+    "VideoThumbnail": "https://i.ytimg.com/vi/aHp9b-Kg69c/hqdefault.jpg"
+  },
+  {
+    "MapName": "Crash Bandicoot Remaster 2020",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-28T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=s6f78_T6x6s",
+    "VideoThumbnail": "https://i.ytimg.com/vi/s6f78_T6x6s/hqdefault.jpg"
+  },
+  {
+    "MapName": "Claustrophobia",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa",
+      "Vinh"
+    ],
+    "PlayDate": "2021-08-29T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=Slt75Wjn6GY",
+    "VideoThumbnail": "https://i.ytimg.com/vi/Slt75Wjn6GY/hqdefault.jpg"
+  },
+  {
+    "MapName": "The Hive",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa",
+      "Vinh"
+    ],
+    "PlayDate": "2021-08-30T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=4_RrJ4Kos3Y",
+    "VideoThumbnail": "https://i.ytimg.com/vi/4_RrJ4Kos3Y/hqdefault.jpg"
+  },
+  {
+    "MapName": "Haunted Forest",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-08-31T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=crRhLGbsFFM",
+    "VideoThumbnail": "https://i.ytimg.com/vi/crRhLGbsFFM/hqdefault.jpg"
+  },
+  {
+    "MapName": "Red Tide",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa",
+      "Vinh"
+    ],
+    "PlayDate": "2021-08-31T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=V4r54QCknfA",
+    "VideoThumbnail": "https://i.ytimg.com/vi/V4r54QCknfA/hqdefault.jpg"
+  },
+  {
+    "MapName": "Dark Wood Extended",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa",
+      "Vinh"
+    ],
+    "PlayDate": "2021-09-03T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=Tzr0xbhLqW0",
+    "VideoThumbnail": "https://i.ytimg.com/vi/Tzr0xbhLqW0/hqdefault.jpg"
+  },
+  {
+    "MapName": "No Echo Remastered",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-04T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=-FFmoLf4E7g",
+    "VideoThumbnail": "https://i.ytimg.com/vi/-FFmoLf4E7g/hqdefault.jpg"
+  },
+  {
+    "MapName": "Front of Survivors Remake",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-04T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=twRfVdqvWj0",
+    "VideoThumbnail": "https://i.ytimg.com/vi/twRfVdqvWj0/hqdefault.jpg"
+  },
+  {
+    "MapName": "Cambalache",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-05T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=26vJL8PwJNc",
+    "VideoThumbnail": "https://i.ytimg.com/vi/26vJL8PwJNc/hqdefault.jpg"
+  },
+  {
+    "MapName": "Diescraper Redux",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-05T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=Bg__0ykOe-c",
+    "VideoThumbnail": "https://i.ytimg.com/vi/Bg__0ykOe-c/hqdefault.jpg"
+  },
+  {
+    "MapName": "I Hate Mountains 2",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-06T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=9t2-5jqgL_Q",
+    "VideoThumbnail": "https://i.ytimg.com/vi/9t2-5jqgL_Q/hqdefault.jpg"
+  },
+  {
+    "MapName": "Dr. Malroy's Laboratory",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-06T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=0pVrU4mrs_8",
+    "VideoThumbnail": "https://i.ytimg.com/vi/0pVrU4mrs_8/hqdefault.jpg"
+  },
+  {
+    "MapName": "City 17",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-07T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=88lv0tfBjzM",
+    "VideoThumbnail": "https://i.ytimg.com/vi/88lv0tfBjzM/hqdefault.jpg"
+  },
+  {
+    "MapName": "Death Sentence",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-08T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=Gvp3VwCfwb0",
+    "VideoThumbnail": "https://i.ytimg.com/vi/Gvp3VwCfwb0/hqdefault.jpg"
+  },
+  {
+    "MapName": "Dead Before Dawn Extended",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-08T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=ixjMamEyaww",
+    "VideoThumbnail": "https://i.ytimg.com/vi/ixjMamEyaww/hqdefault.jpg"
+  },
+  {
+    "MapName": "Buried Deep",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-09T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=HIicPJb4aDU",
+    "VideoThumbnail": "https://i.ytimg.com/vi/HIicPJb4aDU/hqdefault.jpg"
+  },
+  {
+    "MapName": "We don't go to Ravenholm 2",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-10T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=RLxcqgsoCWQ",
+    "VideoThumbnail": "https://i.ytimg.com/vi/RLxcqgsoCWQ/hqdefault.jpg"
+  },
+  {
+    "MapName": "Divine Cybermancy",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-12T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=HXWjpZ2k5DY",
+    "VideoThumbnail": "https://i.ytimg.com/vi/HXWjpZ2k5DY/hqdefault.jpg"
+  },
+  {
+    "MapName": "Blood Proof",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-14T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=A54BTQXFD2c",
+    "VideoThumbnail": "https://i.ytimg.com/vi/A54BTQXFD2c/hqdefault.jpg"
+  },
+  {
+    "MapName": "Overkill",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-14T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=Lte1_N7-6Kg",
+    "VideoThumbnail": "https://i.ytimg.com/vi/Lte1_N7-6Kg/hqdefault.jpg"
+  },
+  {
+    "MapName": "Devil Mountain",
+    "Players": [
+      "Minh",
+      "Bita",
+      "MyNa"
+    ],
+    "PlayDate": "2021-09-15T00:00:00",
+    "VideoUrl": "https://www.youtube.com/watch?v=_jbIMZbrTqg",
+    "VideoThumbnail": "https://i.ytimg.com/vi/_jbIMZbrTqg/hqdefault.jpg"
+  }
+]
