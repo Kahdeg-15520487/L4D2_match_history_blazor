@@ -21,14 +21,14 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th><span class="sort-link" @onclick="() => SortTableByDate()">Date<label>@sortDirection</label></span></th>
-                <th>Map</th>
+                <th><span class="sort-link" @onclick="() => SortTableByDate()">Date <label>@sortDirection</label></span></th>
+                <th>Map<input @bind-value="SearchMap" @bind-value:event="oninput" placeholder="tên map" /></th>
                 <th>Players</th>
-                <th>Summary</th>
+                <th>Video</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var match in matchs)
+            @foreach (var match in filteredMatchs)
             {
                 <tr>
                     <td>@match.PlayDate.ToShortDateString()</td>
@@ -43,12 +43,15 @@ else
 
 @code {
     private MatchInfo[] matchs;
+    private IEnumerable<MatchInfo> filteredMatchs => matchs.Where(mi => mi.MapName.ToLower().Contains(SearchMap.ToLower()));
     private bool IsSortedAscending = false;
     private string sortDirection => IsSortedAscending ? "^" : "v";
+    private string SearchMap = "";
 
     protected override async Task OnInitializedAsync()
     {
-        matchs = await Http.GetFromJsonAsync<MatchInfo[]>("MatchInfo");
+        matchs = await Http.GetFromJsonAsync<MatchInfo[]>
+        ("MatchInfo");
         matchs = matchs.OrderByDescending(m => m.PlayDate).ToArray();
         if (matchs.Length == 0)
         {
@@ -67,18 +70,18 @@ else
         if (IsSortedAscending)
         {
             matchs = matchs.OrderByDescending(x =>
-                                          x.GetType()
-                                           .GetProperty(columnName)
-                                           .GetValue(x, null))
-                                           .ToArray();
+            x.GetType()
+            .GetProperty(columnName)
+            .GetValue(x, null))
+            .ToArray();
         }
         else
         {
             matchs = matchs.OrderBy(x =>
-                                x.GetType()
-                                 .GetProperty(columnName)
-                                 .GetValue(x, null))
-                                 .ToArray();
+            x.GetType()
+            .GetProperty(columnName)
+            .GetValue(x, null))
+            .ToArray();
         }
 
         //Toggle this boolean
