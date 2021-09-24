@@ -24,19 +24,10 @@ else
                         @col.Title
                         @if (col.Searchable)
                         {
-                            <input @bind-value="SearchString" @bind-value:event="oninput" placeholder="" />
+                            @(" ")<input @bind-value="SearchString" @bind-value:event="oninput" placeholder="" />
                         }
                     </th>
                 }
-                @*
-                    <th>Hạng</th>
-                    <th>Tên <input @bind-value="SearchPlayer" @bind-value:event="oninput" placeholder="tên player" /></th>
-                    <th>Kiểu chơi</th>
-                    <th>Tổng điểm</th>
-                    <th>Zombie đã giết</th>
-                    <th>Tank đã giết</th>
-                    <th>Witch đã 1 shot</th>
-                *@
             </tr>
         </thead>
         <tbody>
@@ -65,20 +56,6 @@ else
                     }
                 </tr>
             }
-            @*
-                @foreach (var playerRank in filteredPlayers)
-                {
-                    <tr>
-                        <td>@playerRank.rank_num</td>
-                        <td><a href="@($"https://steamcommunity.com/profiles/{@playerRank.steam_id64}")" target="_blank">@playerRank.last_known_alias</a></td>
-                        <td>@((MarkupString)GetPlayStyle(playerRank))</td>
-                        <td>@playerRank.total_points</td>
-                        <td>@playerRank.infected_killed</td>
-                        <td>@playerRank.tank_killed</td>
-                        <td>@playerRank.witch_killed_1shot</td>
-                    </tr>
-                }
-            *@
         </tbody>
     </table>
 }
