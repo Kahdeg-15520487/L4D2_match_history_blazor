@@ -50,7 +50,7 @@ else
     private IEnumerable<MatchInfo> filteredMatchs => matchs.Where(mi => mi.MapName.ToLower().Contains(SearchMap.ToLower()));
     private bool IsSortedAscending = false;
     private string sortDirection => IsSortedAscending ? "^" : "v";
-    private string SearchMap = "";
+    private string SearchMap = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {

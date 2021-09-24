@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace L4D2_match_history.Shared
@@ -9,6 +10,19 @@ namespace L4D2_match_history.Shared
     public class PlayerRank
     {
         public string steam_id { get; set; }
+
+        [JsonIgnore]
+        public string steam_id64 { get => this.GetSteamId64(); }
+
+        private string GetSteamId64()
+        {
+            var parts = steam_id.Split(":");
+            long converted = long.Parse(parts[2]) * 2;
+            converted += 76561197960265728;
+            converted += int.Parse(parts[1]);
+            return converted.ToString();
+        }
+
         public string last_known_alias { get; set; }
         public string last_join_date { get; set; }
         public int survivor_healed { get; set; }

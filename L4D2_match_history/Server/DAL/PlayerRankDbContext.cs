@@ -19,6 +19,7 @@ namespace L4D2_match_history.Server.DAL
             modelBuilder.Entity<PlayerRank>(pr =>
             {
                 pr.HasNoKey();
+                pr.Ignore(p => p.steam_id64);
                 pr.ToView("STATS_VW_PLAYER_RANKS");
             });
             modelBuilder.Entity<PlayerSkillModifier>().ToTable("STATS_SKILLS");

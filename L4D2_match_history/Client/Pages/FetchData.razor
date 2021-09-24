@@ -16,16 +16,16 @@ else
         <thead>
             <tr>
                 @*
-        <th>Rank</th>
-        <th>Name</th>
-        <th>Style</th>
-        <th>Total points</th>
-        <th>Common killed</th>
-        <th>Tank killed</th>
-        <th>Witch crowned</th>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Style</th>
+                    <th>Total points</th>
+                    <th>Common killed</th>
+                    <th>Tank killed</th>
+                    <th>Witch crowned</th>
                 *@
                 <th>Hạng</th>
-                <th>Name</th>
+                <th>Tên <input @bind-value="SearchPlayer" @bind-value:event="oninput" placeholder="tên player" /></th>
                 <th>Kiểu chơi</th>
                 <th>Tổng điểm</th>
                 <th>Zombie đã giết</th>
@@ -34,11 +34,11 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var playerRank in playerRanks)
+            @foreach (var playerRank in filteredPlayers)
             {
                 <tr>
                     <td>@playerRank.rank_num</td>
-                    <td>@playerRank.last_known_alias</td>
+                    <td><a href="@($"https://steamcommunity.com/profiles/{@playerRank.steam_id64}")" target="_blank">@playerRank.last_known_alias</a></td>
                     <td>@((MarkupString)GetPlayStyle(playerRank))</td>
                     <td>@playerRank.total_points</td>
                     <td>@playerRank.infected_killed</td>
@@ -52,6 +52,8 @@ else
 
 @code {
     private PlayerRank[] playerRanks;
+    private IEnumerable<PlayerRank> filteredPlayers => playerRanks.Where(pr => pr.last_known_alias.ToLower().Contains(SearchPlayer.ToLower()));
+    private string SearchPlayer = string.Empty;
 
     private Dictionary<string, string> PlayStyleNote = new Dictionary<string, string>
 {
