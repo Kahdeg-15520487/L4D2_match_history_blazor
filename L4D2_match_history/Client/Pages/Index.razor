@@ -13,7 +13,7 @@
 {
     <p><em>Loading...</em></p>
 }
-else if (matchs.Length == 0)
+else if (matchs == null)
 {
     <p><em>Please refresh page to fetch new data...</em></p>
 }
@@ -46,6 +46,7 @@ else
 @code {
     private MatchInfo[] matchs;
     private string LastUpdate;
+    private string RequestError;
     private IEnumerable<MatchInfo> filteredMatchs => matchs.Where(mi => mi.MapName.ToLower().Contains(SearchMap.ToLower()));
     private bool IsSortedAscending = false;
     private string sortDirection => IsSortedAscending ? "^" : "v";
@@ -53,13 +54,21 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var datas = await Http.GetFromJsonAsync<MatchInfos>("MatchInfo");
-        matchs = datas.Matchs;
-        LastUpdate = datas.lastUpdate;
-        matchs = matchs.OrderByDescending(m => m.PlayDate).ToArray();
-        if (matchs.Length == 0)
+        var res = await Http.GetAsync("MatchInfo");
+        if (res.StatusCode == System.Net.HttpStatusCode.NoContent)
         {
-            await Http.PutAsync("MatchInfo", null);
+            await this.Update();
+        }
+        else if (res.IsSuccessStatusCode)
+        {
+            var datas = await res.Content.ReadFromJsonAsync<MatchInfos>();
+            matchs = datas.Matchs;
+            LastUpdate = datas.lastUpdate;
+            matchs = matchs.OrderByDescending(m => m.PlayDate).ToArray();
+        }
+        else
+        {
+            RequestError = res.ReasonPhrase;
         }
     }
 
