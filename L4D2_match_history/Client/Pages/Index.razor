@@ -63,7 +63,11 @@ else
         {
             var datas = await res.Content.ReadFromJsonAsync<MatchInfos>();
             matchs = datas.Matchs;
-            LastUpdate = datas.lastUpdate;
+
+            DateTime.TryParse(datas.lastUpdate, out DateTime lu);
+
+            LastUpdate = lu.ToLocalTime().ToString("dd MMM yyyy hh:mm:ss tt");
+
             matchs = matchs.OrderByDescending(m => m.PlayDate).ToArray();
         }
         else
