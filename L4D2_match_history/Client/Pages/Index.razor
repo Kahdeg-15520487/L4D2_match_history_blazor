@@ -3,6 +3,7 @@
 @using System.Linq
 @using Microsoft.AspNetCore.Components.Web
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <h1>L4D2 match history</h1>
 
@@ -18,7 +19,7 @@ else if (matchs.Length == 0)
 }
 else
 {
-    <i><span>Last update @LastUpdate.ToShortTimeString()</span></i>
+    <i><span @onclick="Update">Last update @LastUpdate</span></i>
     <table class="table">
         <thead>
             <tr>
@@ -44,7 +45,7 @@ else
 
 @code {
     private MatchInfo[] matchs;
-    private DateTime LastUpdate;
+    private string LastUpdate;
     private IEnumerable<MatchInfo> filteredMatchs => matchs.Where(mi => mi.MapName.ToLower().Contains(SearchMap.ToLower()));
     private bool IsSortedAscending = false;
     private string sortDirection => IsSortedAscending ? "^" : "v";
@@ -52,13 +53,20 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        matchs = await Http.GetFromJsonAsync<MatchInfo[]>
-        ("MatchInfo");
+        var datas = await Http.GetFromJsonAsync<MatchInfos>("MatchInfo");
+        matchs = datas.Matchs;
+        LastUpdate = datas.lastUpdate;
         matchs = matchs.OrderByDescending(m => m.PlayDate).ToArray();
         if (matchs.Length == 0)
         {
             await Http.PutAsync("MatchInfo", null);
         }
+    }
+
+    private async Task Update()
+    {
+        await Http.PutAsync("MatchInfo", null);
+        this.RefreshPage();
     }
 
     protected void SortTableByDate()
@@ -88,6 +96,11 @@ else
 
         //Toggle this boolean
         IsSortedAscending = !IsSortedAscending;
+    }
+
+    public void RefreshPage()
+    {
+        NavigationManager.NavigateTo("refresh");
     }
 
 }
