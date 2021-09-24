@@ -1,3 +1,4 @@
+using L4D2_match_history.Server.DAL;
 using L4D2_match_history.Server.Services;
 using L4D2_match_history.Server.Services.Contract;
 
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,9 +28,13 @@ namespace L4D2_match_history.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            string sqlConnStr = Configuration["connectionstring"];
+            services.AddDbContextPool<PlayerRankDbContext>(options => options.UseMySql(sqlConnStr, ServerVersion.AutoDetect(sqlConnStr)));
             services.AddTransient<IUpdateDataService, UpdateDataService>();
+            services.AddTransient<IPlayerStatService, PlayerStatService>();
 
             services.AddControllersWithViews();
+            services.AddControllers();
             services.AddRazorPages();
         }
 
