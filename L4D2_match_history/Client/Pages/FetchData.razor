@@ -1,0 +1,129 @@
+﻿@page "/fetchdata"
+@using L4D2_match_history.Shared
+@inject HttpClient Http
+
+<h1>Player ranks</h1>
+
+<p>Xếp hạng player.</p>
+
+@if (playerRanks == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                @*
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Style</th>
+        <th>Total points</th>
+        <th>Common killed</th>
+        <th>Tank killed</th>
+        <th>Witch crowned</th>
+                *@
+                <th>Hạng</th>
+                <th>Name</th>
+                <th>Kiểu chơi</th>
+                <th>Tổng điểm</th>
+                <th>Zombie đã giết</th>
+                <th>Tank đã giết</th>
+                <th>Witch đã 1 shot</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var playerRank in playerRanks)
+            {
+                <tr>
+                    <td>@playerRank.rank_num</td>
+                    <td>@playerRank.last_known_alias</td>
+                    <td>@((MarkupString)GetPlayStyle(playerRank))</td>
+                    <td>@playerRank.total_points</td>
+                    <td>@playerRank.infected_killed</td>
+                    <td>@playerRank.tank_killed</td>
+                    <td>@playerRank.witch_killed_1shot</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private PlayerRank[] playerRanks;
+
+    private Dictionary<string, string> PlayStyleNote = new Dictionary<string, string>
+{
+        {"Balancer", "Not specialize in using any weapon." },
+        {"Specialist", "M60 and/or M79 user. Kaboom!" },
+        {"Brawler", "Prefer to get close and slash them down." },
+        {"Cowboy", "One Deag. One Deag. One Deag." },
+        {"Rifler", "Typical soldier." },
+        {"Supporter", "Shotgun specialist." },
+        {"Run'n'Gun", "Run around with SMG." },
+        {"Markman", "Head hunter with sniper." },
+    };
+
+    private Dictionary<string, string> PlayStyleNoteVN = new Dictionary<string, string>
+{
+        {"Balancer", "Không chuyên dùng vũ khí nào." },
+        {"Specialist", "Chuyên dùng M60 hoặc M79." },
+        {"Brawler", "Thích chém giết." },
+        {"Cowboy", "Chỉ cần Deagle là đủ." },
+        {"Rifler", "Quân nhân thực thụ." },
+        {"Supporter", "Chuyên dùng shotgun." },
+        {"Run'n'Gun", "Chạy vòng vòng với SMG." },
+        {"Markman", "Người săn đầu." },
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        playerRanks = await Http.GetFromJsonAsync<PlayerRank[]>("PlayerRank");
+    }
+
+    private string GetPlayStyle(PlayerRank playerRank)
+    {
+
+        int special = playerRank.weapon_special;
+        int melee = playerRank.weapon_melee;
+        int deagle = playerRank.weapon_deagle;
+        int rifle = playerRank.weapon_rifle;
+        int shotgun = playerRank.weapon_shotgun;
+        int smg = playerRank.weapon_smg;
+        int sniper = playerRank.weapon_sniper;
+
+        string playStyle = "Balancer";
+
+        if (special > melee && special > deagle && special > rifle && special > shotgun && special > smg && special > sniper)
+        {
+            playStyle = "Specialist";
+        }
+        else if (melee > special && melee > deagle && melee > rifle && melee > shotgun && melee > smg && melee > sniper)
+        {
+            playStyle = "Brawler";
+        }
+        else if (deagle > special && deagle > melee && deagle > rifle && deagle > shotgun && deagle > smg && deagle > sniper)
+        {
+            playStyle = "Cowboy";
+        }
+        else if (rifle > special && rifle > melee && rifle > deagle && rifle > shotgun && rifle > smg && rifle > sniper)
+        {
+            playStyle = "Rifler";
+        }
+        else if (shotgun > special && shotgun > melee && shotgun > deagle && shotgun > rifle && shotgun > smg && shotgun > sniper)
+        {
+            playStyle = "Supporter";
+        }
+        else if (smg > special && smg > melee && smg > deagle && smg > rifle && smg > shotgun && smg > sniper)
+        {
+            playStyle = "Run'n'Gun";
+        }
+        else if (sniper > special && sniper > melee && sniper > deagle && sniper > rifle && sniper > shotgun && sniper > smg)
+        {
+            playStyle = "Markman";
+        }
+
+        return $"<div title=\"{PlayStyleNoteVN[playStyle]}\">{playStyle}<div/>";
+    }
+}

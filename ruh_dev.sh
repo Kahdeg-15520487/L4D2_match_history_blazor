@@ -1,0 +1,1 @@
+docker run --name l4d2_mh --env-file ./env.list --env -p 8080:80 l4d2_match_history_blazor_api:latest

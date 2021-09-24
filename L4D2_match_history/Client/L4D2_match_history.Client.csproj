@@ -6,12 +6,10 @@
 
   <ItemGroup>
     <None Remove="Pages\Counter.razor.t" />
-    <None Remove="Pages\FetchData.razor.t" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Pages\Counter.razor.t" />
-    <Content Include="Pages\FetchData.razor.t" />
   </ItemGroup>
 
   <ItemGroup>

@@ -18,6 +18,7 @@ else if (matchs.Length == 0)
 }
 else
 {
+    <i><span>Last update @LastUpdate.ToShortTimeString()</span></i>
     <table class="table">
         <thead>
             <tr>
@@ -43,6 +44,7 @@ else
 
 @code {
     private MatchInfo[] matchs;
+    private DateTime LastUpdate;
     private IEnumerable<MatchInfo> filteredMatchs => matchs.Where(mi => mi.MapName.ToLower().Contains(SearchMap.ToLower()));
     private bool IsSortedAscending = false;
     private string sortDirection => IsSortedAscending ? "^" : "v";
