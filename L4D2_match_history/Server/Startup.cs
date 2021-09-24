@@ -28,10 +28,13 @@ namespace L4D2_match_history.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+
             string sqlConnStr = Configuration["connectionstring"];
             services.AddDbContextPool<PlayerRankDbContext>(options => options.UseMySql(sqlConnStr, ServerVersion.AutoDetect(sqlConnStr)));
             services.AddTransient<IUpdateDataService, UpdateDataService>();
             services.AddTransient<IPlayerStatService, PlayerStatService>();
+            services.AddTransient<IDisplayTemplateService, DisplayTemplateService>();
 
             services.AddControllersWithViews();
             services.AddControllers();

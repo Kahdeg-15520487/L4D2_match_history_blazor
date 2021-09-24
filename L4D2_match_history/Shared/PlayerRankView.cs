@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace L4D2_match_history.Shared
 {
-    public class PlayerRank
+    public class PlayerRankView
     {
         public string steam_id { get; set; }
         public string steam_id64 { get; set; }
         public string play_style { get; set; }
         public string last_known_alias { get; set; }
         public string last_known_alias_unicode { get; set; }
-        public DateTime last_join_date { get; set; }
+        public string last_join_date { get; set; }
         public int survivor_healed { get; set; }
         public int survivor_defibed { get; set; }
         public int survivor_death { get; set; }
@@ -49,11 +49,13 @@ namespace L4D2_match_history.Shared
         public int witch_harassed { get; set; }
         public int tank_killed { get; set; }
         public int tank_melee { get; set; }
-        public DateTime create_date { get; set; }
+        public double total_points { get; set; }
+        public long rank_num { get; set; }
+        public string create_date { get; set; }
 
-        public PlayerRank() { }
+        public PlayerRankView() { }
 
-        public PlayerRank(string steam_id, string last_known_alias, DateTime last_join_date, int survivor_healed, int survivor_defibed, int survivor_death, int survivor_incapped, int survivor_ff, int weapon_rifle, int weapon_shotgun, int weapon_melee, int weapon_deagle, int weapon_special, int weapon_smg, int weapon_sniper, int infected_killed, int infected_headshot, int boomer_killed, int boomer_killed_clean, int charger_killed, int charger_pummeled, int hunter_killed, int hunter_pounced, int hunter_shoved, int jockey_killed, int jockey_pounced, int jockey_shoved, int jockey_rided, int smoker_killed, int smoker_choked, int smoker_tongue_slashed, int spitter_killed, int witch_killed, int witch_killed_1shot, int witch_harassed, int tank_killed, int tank_melee, DateTime create_date)
+        public PlayerRankView(string steam_id, string last_known_alias, string last_join_date, int survivor_healed, int survivor_defibed, int survivor_death, int survivor_incapped, int survivor_ff, int weapon_rifle, int weapon_shotgun, int weapon_melee, int weapon_deagle, int weapon_special, int weapon_smg, int weapon_sniper, int infected_killed, int infected_headshot, int boomer_killed, int boomer_killed_clean, int charger_killed, int charger_pummeled, int hunter_killed, int hunter_pounced, int hunter_shoved, int jockey_killed, int jockey_pounced, int jockey_shoved, int jockey_rided, int smoker_killed, int smoker_choked, int smoker_tongue_slashed, int spitter_killed, int witch_killed, int witch_killed_1shot, int witch_harassed, int tank_killed, int tank_melee, double total_points, long rank_num, string create_date)
         {
             this.steam_id = steam_id;
             this.last_known_alias = last_known_alias;
@@ -92,73 +94,9 @@ namespace L4D2_match_history.Shared
             this.witch_harassed = witch_harassed;
             this.tank_killed = tank_killed;
             this.tank_melee = tank_melee;
+            this.total_points = total_points;
+            this.rank_num = rank_num;
             this.create_date = create_date;
         }
-
-        public string GetSteamId64()
-        {
-            var parts = steam_id.Split(":");
-            long converted = long.Parse(parts[2]) * 2;
-            converted += 76561197960265728;
-            converted += int.Parse(parts[1]);
-            return converted.ToString();
-        }
-
-        public string GetPlayStyle()
-        {
-
-            int special = this.weapon_special;
-            int melee = this.weapon_melee;
-            int deagle = this.weapon_deagle;
-            int rifle = this.weapon_rifle;
-            int shotgun = this.weapon_shotgun;
-            int smg = this.weapon_smg;
-            int sniper = this.weapon_sniper;
-
-            string playStyle = "Balancer";
-
-            if (special > melee && special > deagle && special > rifle && special > shotgun && special > smg && special > sniper)
-            {
-                playStyle = "Specialist";
-            }
-            else if (melee > special && melee > deagle && melee > rifle && melee > shotgun && melee > smg && melee > sniper)
-            {
-                playStyle = "Brawler";
-            }
-            else if (deagle > special && deagle > melee && deagle > rifle && deagle > shotgun && deagle > smg && deagle > sniper)
-            {
-                playStyle = "Cowboy";
-            }
-            else if (rifle > special && rifle > melee && rifle > deagle && rifle > shotgun && rifle > smg && rifle > sniper)
-            {
-                playStyle = "Rifler";
-            }
-            else if (shotgun > special && shotgun > melee && shotgun > deagle && shotgun > rifle && shotgun > smg && shotgun > sniper)
-            {
-                playStyle = "Supporter";
-            }
-            else if (smg > special && smg > melee && smg > deagle && smg > rifle && smg > shotgun && smg > sniper)
-            {
-                playStyle = "Run'n'Gun";
-            }
-            else if (sniper > special && sniper > melee && sniper > deagle && sniper > rifle && sniper > shotgun && sniper > smg)
-            {
-                playStyle = "Markman";
-            }
-
-            return $"<div title=\"{PlayStyleNoteVN[playStyle]}\">{playStyle}<div/>";
-        }
-
-        private static Dictionary<string, string> PlayStyleNoteVN = new Dictionary<string, string>
-                    {
-                        {"Balancer", "Không chuyên dùng vũ khí nào." },
-                        {"Specialist", "Chuyên dùng M60 hoặc M79." },
-                        {"Brawler", "Thích chém giết." },
-                        {"Cowboy", "Chỉ cần Deagle là đủ." },
-                        {"Rifler", "Quân nhân thực thụ." },
-                        {"Supporter", "Chuyên dùng shotgun." },
-                        {"Run'n'Gun", "Chạy vòng vòng với SMG." },
-                        {"Markman", "Người săn đầu." },
-                    };
     }
 }

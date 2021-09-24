@@ -9,7 +9,7 @@ namespace L4D2_match_history.Server.Services.Contract
 {
     public interface IPlayerStatService
     {
-        PlayerRank GetPlayerRank(string steamId);
-        IEnumerable<PlayerRank> GetPlayerRanks();
+        PlayerRankView GetPlayerRank(string steamId);
+        IEnumerable<PlayerRankView> GetPlayerRanks();
     }
 }

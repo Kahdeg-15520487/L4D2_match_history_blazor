@@ -1,0 +1,240 @@
+﻿@page "/templateeditor"
+@using L4D2_match_history.Shared
+@using CsvHelper
+
+@inject HttpClient Http
+
+<style type="text/css">
+    .normal {
+        background-color: white;
+    }
+
+    .edit {
+        background-color: lightskyblue;
+    }
+</style>
+
+<h1>Display template editor</h1>
+
+<p>Input type: <span @onclick="NextInputType">@inputType.ToString()</span></p>
+@switch (inputType)
+{
+    case InputType.Table:
+        <input @bind="@displayTemplateName" />
+        <button @onclick="LoadTemplate">Load template</button>
+        <button @onclick="SaveTemplate">Save template</button>
+        <table style="width:100%">
+            <tr>
+                <th>Title</th>
+                <th>PropertyName</th>
+                <th>Searchable</th>
+                <th>IsRawHtml</th>
+                <th>HasFormat</th>
+                <th>FormatString</th>
+                <th>Remove</th>
+                <th>Edit</th>
+            </tr>
+            @foreach (var c in columns)
+            {
+                <tr class="@GetColor(c)">
+                    <td>@c.Title</td>
+                    <td>@c.PropertyName</td>
+                    <td>@c.Searchable</td>
+                    <td>@c.IsRawHtml</td>
+                    <td>@c.HasFormat</td>
+                    <td>@c.FormatString</td>
+                    <td>
+                        <button @onclick="() => columns.Remove(c)">
+                            X
+                        </button>
+                    </td>
+                    <td>
+                        <button @onclick="() => EditColumn(c)">
+                            @if (editIndex == columns.IndexOf(c))
+                            {
+                                @("O")
+                            }
+                            else
+                            {
+                                @("X")
+                            }
+                        </button>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <button @onclick="ApplyChanges">
+            @if (editMode)
+            {
+                @("Update value")
+            }
+            else
+            {
+                @("New value")
+            }
+        </button>
+        <div>
+            Title: <input @bind="@title" @oninput="(e)=> { title = e.Value ==null? string.Empty:(string)e.Value; }" />
+        </div>
+        <div>
+            Property name: <input @bind="@propertyName" @oninput="(e)=> { propertyName = e.Value ==null? string.Empty:(string)e.Value; }" />
+        </div>
+        <div>
+            Is Searchable: <input type="checkbox" @bind="@searchable" @oninput="(e)=>searchable = (bool)e.Value" />
+        </div>
+        <div>
+            Is raw HTML: <input type="checkbox" @bind="@isRawHtml" @oninput="(e)=>isRawHtml = (bool)e.Value" />
+        </div>
+        <div>
+            Has format: <input type="checkbox" @bind="@hasFormat" @oninput="(e)=>hasFormat = (bool)e.Value" />
+        </div>
+        <div>
+            Format string: <input @bind="@formatString" @oninput="(e)=> { formatString = e.Value ==null? string.Empty:(string)e.Value; }" />
+        </div>
+        break;
+    case InputType.CSV:
+        <div>
+            <textarea @bind="@rawDisplayTemplate"></textarea>
+        </div>
+        <div>
+            <button @onclick="ParseRawDisplayTemplate"> Parse </button>
+        </div>
+        break;
+    case InputType.File:
+    default:
+        <div>Not implemented!</div>
+        break;
+}
+
+@code {
+    private DisplayTemplate displayTemplate;
+    private string displayTemplateName;
+    private InputType inputType = InputType.Table;
+
+    string title = "";
+    string propertyName = "";
+    bool searchable;
+    bool isRawHtml;
+    bool hasFormat;
+    string formatString = "";
+    List<DisplayColumn> columns = new();
+
+    string rawDisplayTemplate = "";
+    bool editMode = false;
+    int editIndex = -1;
+
+    private string GetColor(DisplayColumn c)
+    {
+        return editIndex == columns.IndexOf(c) ? "edit" : string.Empty;
+    }
+
+    private void EditColumn(DisplayColumn c)
+    {
+        if (editMode)
+        {
+            editMode = false;
+            editIndex = -1;
+            title = string.Empty;
+            propertyName = string.Empty;
+            searchable = false;
+            isRawHtml = false;
+            hasFormat = false;
+            formatString = string.Empty;
+            return;
+        }
+        editMode = true;
+        editIndex = columns.IndexOf(c);
+        title = c.Title;
+        propertyName = c.PropertyName;
+        searchable = c.Searchable;
+        isRawHtml = c.IsRawHtml;
+        hasFormat = c.HasFormat;
+        formatString = c.FormatString;
+    }
+
+    private void ApplyChanges()
+    {
+        if (editMode)
+        {
+            columns[editIndex].Title = title;
+            columns[editIndex].PropertyName = propertyName;
+            columns[editIndex].Searchable = searchable;
+            columns[editIndex].IsRawHtml = isRawHtml;
+            columns[editIndex].HasFormat = hasFormat;
+            columns[editIndex].FormatString = formatString;
+        }
+        else
+        {
+            columns.Add(new DisplayColumn()
+            {
+                Title = title,
+                PropertyName = propertyName,
+                Searchable = searchable,
+                IsRawHtml = isRawHtml,
+                HasFormat = hasFormat,
+                FormatString = formatString
+            });
+        }
+    }
+
+    private async Task LoadTemplate()
+    {
+        if (!string.IsNullOrWhiteSpace(displayTemplateName))
+        {
+            var res = await Http.GetAsync($"DisplayTemplate/{displayTemplateName}");
+            if (res.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                displayTemplate = await res.Content.ReadFromJsonAsync<DisplayTemplate>();
+                columns = displayTemplate.Columns;
+                displayTemplateName = displayTemplate.Name;
+            }
+        }
+    }
+
+    private async Task SaveTemplate()
+    {
+        if (!string.IsNullOrWhiteSpace(displayTemplateName))
+        {
+            displayTemplate.Name = displayTemplateName;
+            displayTemplate.Columns = columns;
+            await Http.PostAsJsonAsync<DisplayTemplate>($"DisplayTemplate", displayTemplate);
+        }
+    }
+
+    private void NextInputType()
+    {
+        switch (inputType)
+        {
+            case InputType.Table:
+                inputType = InputType.CSV;
+                break;
+            case InputType.CSV:
+                inputType = InputType.File;
+                break;
+            case InputType.File:
+            default:
+                inputType = InputType.Table;
+                break;
+        }
+    }
+
+    protected async Task ParseRawDisplayTemplate()
+    {
+        try
+        {
+            var res = await Http.PostAsJsonAsync<string>("DisplayTemplate/parse", rawDisplayTemplate);
+            if (res.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                displayTemplate = await res.Content.ReadFromJsonAsync<DisplayTemplate>();
+                columns = displayTemplate.Columns;
+                displayTemplateName = displayTemplate.Name;
+                inputType = InputType.Table;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("error: {0}", ex.Message);
+        }
+    }
+}

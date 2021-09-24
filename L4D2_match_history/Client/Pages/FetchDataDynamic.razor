@@ -1,0 +1,119 @@
+﻿@page "/fetchdatadyn"
+@using L4D2_match_history.Shared
+@using CsvHelper
+@using System.Text.RegularExpressions
+
+@inject HttpClient Http
+
+<h1>Player ranks</h1>
+
+<p>Xếp hạng player.</p>
+
+@if (playerRanks == null || displayTemplate == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                @foreach (DisplayColumn col in displayTemplate.Columns)
+                {
+                    <th>
+                        @col.Title
+                        @if (col.Searchable)
+                        {
+                            <input @bind-value="SearchString" @bind-value:event="oninput" placeholder="" />
+                        }
+                    </th>
+                }
+                @*
+                    <th>Hạng</th>
+                    <th>Tên <input @bind-value="SearchPlayer" @bind-value:event="oninput" placeholder="tên player" /></th>
+                    <th>Kiểu chơi</th>
+                    <th>Tổng điểm</th>
+                    <th>Zombie đã giết</th>
+                    <th>Tank đã giết</th>
+                    <th>Witch đã 1 shot</th>
+                *@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var playerRank in filteredPlayerRanks)
+            {
+                <tr>
+                    @foreach (DisplayColumn col in displayTemplate.Columns)
+                    {
+                        <td>
+                            @{
+                                string value = playerRank.GetType().GetProperty(col.PropertyName)?.GetValue(playerRank)?.ToString();
+                                if (col.HasFormat)
+                                {
+                                    value = SubstituteValue(col.FormatString, playerRank);
+                                }
+                            }
+                            @if (col.IsRawHtml)
+                            {
+                                @((MarkupString)value)
+                            }
+                            else
+                            {
+                                @value
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+            @*
+                @foreach (var playerRank in filteredPlayers)
+                {
+                    <tr>
+                        <td>@playerRank.rank_num</td>
+                        <td><a href="@($"https://steamcommunity.com/profiles/{@playerRank.steam_id64}")" target="_blank">@playerRank.last_known_alias</a></td>
+                        <td>@((MarkupString)GetPlayStyle(playerRank))</td>
+                        <td>@playerRank.total_points</td>
+                        <td>@playerRank.infected_killed</td>
+                        <td>@playerRank.tank_killed</td>
+                        <td>@playerRank.witch_killed_1shot</td>
+                    </tr>
+                }
+            *@
+        </tbody>
+    </table>
+}
+
+@code {
+    private DisplayTemplate displayTemplate;
+    private PlayerRankView[] playerRanks;
+    private IEnumerable<PlayerRankView> filteredPlayerRanks => playerRanks.Where(pr => pr.last_known_alias_unicode.RemoveDiacritics().ToLower().Contains(SearchString.RemoveDiacritics().ToLower()));
+    private string SearchString = string.Empty;
+    private string csvDisplayTemplate = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        playerRanks = await Http.GetFromJsonAsync<PlayerRankView[]>("PlayerRank");
+        displayTemplate = await Http.GetFromJsonAsync<DisplayTemplate>("DisplayTemplate/default");
+    }
+
+    protected string SubstituteValue(string format, PlayerRankView playerRank)
+    {
+        Regex r = new Regex("({{\\S+}})");
+        Match m = r.Match(format);
+        string output = new string(format);
+
+        while (m.Success)
+        {
+            var matched = m.Value;
+            var coreMatched = matched.Substring(2, matched.Length - 4);
+            output = output.Replace(matched, GetValue(playerRank, coreMatched));
+            m = m.NextMatch();
+        }
+        return output;
+    }
+
+    protected string GetValue(PlayerRankView playerRank, string propertyName)
+    {
+        return playerRank.GetType().GetProperty(propertyName)?.GetValue(playerRank)?.ToString();
+    }
+}

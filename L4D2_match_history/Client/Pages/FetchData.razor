@@ -51,8 +51,8 @@ else
 }
 
 @code {
-    private PlayerRank[] playerRanks;
-    private IEnumerable<PlayerRank> filteredPlayers => playerRanks.Where(pr => pr.last_known_alias.ToLower().Contains(SearchPlayer.ToLower()));
+    private PlayerRankView[] playerRanks;
+    private IEnumerable<PlayerRankView> filteredPlayers => playerRanks.Where(pr => pr.last_known_alias.ToLower().Contains(SearchPlayer.ToLower()));
     private string SearchPlayer = string.Empty;
 
     private Dictionary<string, string> PlayStyleNote = new Dictionary<string, string>
@@ -81,10 +81,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        playerRanks = await Http.GetFromJsonAsync<PlayerRank[]>("PlayerRank");
+        playerRanks = await Http.GetFromJsonAsync<PlayerRankView[]>("PlayerRank");
     }
 
-    private string GetPlayStyle(PlayerRank playerRank)
+    private string GetPlayStyle(PlayerRankView playerRank)
     {
 
         int special = playerRank.weapon_special;
