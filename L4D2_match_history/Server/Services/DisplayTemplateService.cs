@@ -44,6 +44,7 @@ namespace L4D2_match_history.Server.Services
                     dbContext.displayColumns.RemoveRange(existing.Columns);
                     existing.Name = displayTemplate.Name;
                     existing.Columns = displayTemplate.Columns;
+                    existing.Title = displayTemplate.Title;
                     dbContext.SaveChanges();
                     return true;
                 }

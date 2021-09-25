@@ -13,6 +13,7 @@ namespace L4D2_match_history.Shared
     public class DisplayTemplate
     {
         public string Name { get; set; }
+        public string Title { get; set; }
         public List<DisplayColumn> Columns { get; set; }
     }
 
@@ -23,6 +24,7 @@ namespace L4D2_match_history.Shared
         public string Title { get; set; }
         public string PropertyName { get; set; }
         public bool Searchable { get; set; }
+        public bool Sortable { get; set; }
         public bool IsRawHtml { get; set; }
         public bool HasFormat { get; set; }
         public string FormatString { get; set; }
@@ -39,6 +41,13 @@ namespace L4D2_match_history.Shared
         File = 2,
     }
 
+    public enum SortState
+    {
+        ASC = 0,
+        DESC = 1,
+        NONE = 2,
+    }
+
     public class DisplayColumnMap : ClassMap<DisplayColumn>
     {
         public DisplayColumnMap()
@@ -46,6 +55,7 @@ namespace L4D2_match_history.Shared
             Map(dc => dc.Title);
             Map(dc => dc.PropertyName);
             Map(dc => dc.Searchable);
+            Map(dc => dc.Sortable);
             Map(dc => dc.IsRawHtml);
             Map(dc => dc.HasFormat);
             Map(dc => dc.FormatString);

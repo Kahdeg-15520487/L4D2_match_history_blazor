@@ -60,6 +60,7 @@ namespace L4D2_match_history.Server.Controllers
             using (var reader = new System.IO.StringReader(raw))
             {
                 var name = reader.ReadLine();
+                var title = reader.ReadLine();
 
                 using (var csv = new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture))
                 {

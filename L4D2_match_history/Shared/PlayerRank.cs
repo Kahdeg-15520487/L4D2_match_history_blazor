@@ -49,6 +49,7 @@ namespace L4D2_match_history.Shared
         public int witch_harassed { get; set; }
         public int tank_killed { get; set; }
         public int tank_melee { get; set; }
+        public int car_alarm { get; set; }
         public DateTime create_date { get; set; }
 
         public PlayerRank() { }

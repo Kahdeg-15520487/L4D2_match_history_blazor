@@ -1,4 +1,4 @@
-﻿@page "/fetchdatadyn"
+﻿@page "/fetchdatadyn/{displayTemplateName}"
 @using L4D2_match_history.Shared
 @using CsvHelper
 @using System.Text.RegularExpressions
@@ -21,10 +21,23 @@ else
                 @foreach (DisplayColumn col in displayTemplate.Columns)
                 {
                     <th>
-                        @col.Title
                         @if (col.Searchable)
                         {
-                            @(" ")<input @bind-value="SearchString" @bind-value:event="oninput" placeholder="" />
+                            @col.Title@(" ")<input @bind-value="SearchString" @bind-value:event="oninput" placeholder="" />
+                        }
+                        else if (col.Sortable)
+                        {
+                            <div @onclick="() => SortTable(col.PropertyName)">
+                                @col.Title
+                                @if (!string.IsNullOrEmpty(sortingProperty) && col.PropertyName == sortingProperty)
+                                {
+                                    <label>@sortDirection</label>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            @col.Title
                         }
                     </th>
                 }
@@ -61,16 +74,27 @@ else
 }
 
 @code {
+    [Parameter]
+    public string displayTemplateName { get; set; }
+
     private DisplayTemplate displayTemplate;
     private PlayerRankView[] playerRanks;
     private IEnumerable<PlayerRankView> filteredPlayerRanks => playerRanks.Where(pr => pr.last_known_alias_unicode.RemoveDiacritics().ToLower().Contains(SearchString.RemoveDiacritics().ToLower()));
     private string SearchString = string.Empty;
     private string csvDisplayTemplate = string.Empty;
+    private bool IsSortedAscending = false;
+    private string sortDirection => IsSortedAscending ? "^" : "v";
+    private string sortingProperty = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         playerRanks = await Http.GetFromJsonAsync<PlayerRankView[]>("PlayerRank");
-        displayTemplate = await Http.GetFromJsonAsync<DisplayTemplate>("DisplayTemplate/default");
+        displayTemplate = await Http.GetFromJsonAsync<DisplayTemplate>($"DisplayTemplate/{displayTemplateName}");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        displayTemplate = await Http.GetFromJsonAsync<DisplayTemplate>($"DisplayTemplate/{displayTemplateName}");
     }
 
     protected string SubstituteValue(string format, PlayerRankView playerRank)
@@ -92,5 +116,33 @@ else
     protected string GetValue(PlayerRankView playerRank, string propertyName)
     {
         return playerRank.GetType().GetProperty(propertyName)?.GetValue(playerRank)?.ToString();
+    }
+
+    protected void SortTable(string columnName)
+    {
+        if (string.IsNullOrEmpty(columnName))
+        {
+            return;
+        }
+
+        sortingProperty = columnName;
+
+        if (IsSortedAscending)
+        {
+            playerRanks = playerRanks.OrderByDescending(x => x.GetType()
+                                                            .GetProperty(columnName)
+                                                            .GetValue(x, null))
+                                                            .ToArray();
+        }
+        else
+        {
+            playerRanks = playerRanks.OrderBy(x => x.GetType()
+                                                    .GetProperty(columnName)
+                                                    .GetValue(x, null))
+                                                    .ToArray();
+        }
+
+        //Toggle this boolean
+        IsSortedAscending = !IsSortedAscending;
     }
 }

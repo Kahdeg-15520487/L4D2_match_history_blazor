@@ -23,16 +23,20 @@
         <input @bind="@displayTemplateName" />
         <button @onclick="LoadTemplate">Load template</button>
         <button @onclick="SaveTemplate">Save template</button>
+        <br />
+        <input @bind="@displayTemplateTitle" />
         <table style="width:100%">
             <tr>
                 <th>Title</th>
                 <th>PropertyName</th>
                 <th>Searchable</th>
+                <th>Sortable</th>
                 <th>IsRawHtml</th>
                 <th>HasFormat</th>
                 <th>FormatString</th>
                 <th>Remove</th>
                 <th>Edit</th>
+                <th>Reposition</th>
             </tr>
             @foreach (var c in columns)
             {
@@ -40,6 +44,7 @@
                     <td>@c.Title</td>
                     <td>@c.PropertyName</td>
                     <td>@c.Searchable</td>
+                    <td>@c.Sortable</td>
                     <td>@c.IsRawHtml</td>
                     <td>@c.HasFormat</td>
                     <td>@c.FormatString</td>
@@ -59,6 +64,10 @@
                                 @("X")
                             }
                         </button>
+                    </td>
+                    <td>
+                        <button @onclick="()=>MoveUp(c)">^</button>
+                        <button @onclick="()=>MoveDown(c)">v</button>
                     </td>
                 </tr>
             }
@@ -82,6 +91,9 @@
         </div>
         <div>
             Is Searchable: <input type="checkbox" @bind="@searchable" @oninput="(e)=>searchable = (bool)e.Value" />
+        </div>
+        <div>
+            Is Sortable: <input type="checkbox" @bind="@sortable" @oninput="(e)=>sortable = (bool)e.Value" />
         </div>
         <div>
             Is raw HTML: <input type="checkbox" @bind="@isRawHtml" @oninput="(e)=>isRawHtml = (bool)e.Value" />
@@ -110,11 +122,13 @@
 @code {
     private DisplayTemplate displayTemplate;
     private string displayTemplateName;
+    private string displayTemplateTitle;
     private InputType inputType = InputType.Table;
 
     string title = "";
     string propertyName = "";
     bool searchable;
+    bool sortable;
     bool isRawHtml;
     bool hasFormat;
     string formatString = "";
@@ -138,6 +152,7 @@
             title = string.Empty;
             propertyName = string.Empty;
             searchable = false;
+            sortable = false;
             isRawHtml = false;
             hasFormat = false;
             formatString = string.Empty;
@@ -148,6 +163,7 @@
         title = c.Title;
         propertyName = c.PropertyName;
         searchable = c.Searchable;
+        sortable = c.Sortable;
         isRawHtml = c.IsRawHtml;
         hasFormat = c.HasFormat;
         formatString = c.FormatString;
@@ -160,6 +176,7 @@
             columns[editIndex].Title = title;
             columns[editIndex].PropertyName = propertyName;
             columns[editIndex].Searchable = searchable;
+            columns[editIndex].Sortable = sortable;
             columns[editIndex].IsRawHtml = isRawHtml;
             columns[editIndex].HasFormat = hasFormat;
             columns[editIndex].FormatString = formatString;
@@ -171,6 +188,7 @@
                 Title = title,
                 PropertyName = propertyName,
                 Searchable = searchable,
+                Sortable = sortable,
                 IsRawHtml = isRawHtml,
                 HasFormat = hasFormat,
                 FormatString = formatString
@@ -188,6 +206,7 @@
                 displayTemplate = await res.Content.ReadFromJsonAsync<DisplayTemplate>();
                 columns = displayTemplate.Columns;
                 displayTemplateName = displayTemplate.Name;
+                displayTemplateTitle = displayTemplate.Title;
             }
         }
     }
@@ -197,6 +216,7 @@
         if (!string.IsNullOrWhiteSpace(displayTemplateName))
         {
             displayTemplate.Name = displayTemplateName;
+            displayTemplate.Title = displayTemplateTitle;
             displayTemplate.Columns = columns;
             await Http.PostAsJsonAsync<DisplayTemplate>($"DisplayTemplate", displayTemplate);
         }
@@ -210,7 +230,8 @@
                 inputType = InputType.CSV;
                 break;
             case InputType.CSV:
-                inputType = InputType.File;
+                //inputType = InputType.File;
+                inputType = InputType.Table;
                 break;
             case InputType.File:
             default:
@@ -229,12 +250,45 @@
                 displayTemplate = await res.Content.ReadFromJsonAsync<DisplayTemplate>();
                 columns = displayTemplate.Columns;
                 displayTemplateName = displayTemplate.Name;
+                displayTemplateTitle = displayTemplate.Title;
                 inputType = InputType.Table;
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine("error: {0}", ex.Message);
+        }
+    }
+
+    protected void MoveUp(DisplayColumn c)
+    {
+        var index = columns.IndexOf(c);
+        index--;
+        if (index < 0)
+        {
+            columns.Remove(c);
+            columns.Add(c);
+        }
+        else
+        {
+            columns.Remove(c);
+            columns.Insert(index, c);
+        }
+    }
+
+    protected void MoveDown(DisplayColumn c)
+    {
+        var index = columns.IndexOf(c);
+        index++;
+        if (index >= columns.Count)
+        {
+            columns.Remove(c);
+            columns.Insert(0, c);
+        }
+        else
+        {
+            columns.Remove(c);
+            columns.Insert(index, c);
         }
     }
 }
