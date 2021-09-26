@@ -23,6 +23,7 @@ namespace L4D2_match_history.Shared
         public int Id { get; set; }
         public string Title { get; set; }
         public string PropertyName { get; set; }
+        public bool IsDateTime { get; set; }
         public bool Searchable { get; set; }
         public bool Sortable { get; set; }
         public bool IsRawHtml { get; set; }

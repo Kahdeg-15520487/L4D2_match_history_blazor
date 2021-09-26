@@ -51,7 +51,7 @@ else
                     {
                         <td>
                             @{
-                                string value = playerRank.GetType().GetProperty(col.PropertyName)?.GetValue(playerRank)?.ToString();
+                                string value = GetValue(playerRank, col.PropertyName, col.IsDateTime);
                                 if (col.HasFormat)
                                 {
                                     value = SubstituteValue(col.FormatString, playerRank);
@@ -113,9 +113,26 @@ else
         return output;
     }
 
-    protected string GetValue(PlayerRankView playerRank, string propertyName)
+    protected string GetValue(PlayerRankView playerRank, string propertyName, bool isDateTime = false)
     {
-        return playerRank.GetType().GetProperty(propertyName)?.GetValue(playerRank)?.ToString();
+        var value = playerRank.GetType().GetProperty(propertyName)?.GetValue(playerRank);
+
+        if (value == null)
+        {
+            return string.Empty;
+        }
+        else if (isDateTime)
+        {
+            if (DateTime.TryParse(value.ToString(), out DateTime result))
+            {
+                return result.ToLocalTime().ToString("dd MMM yyyy hh:mm:ss tt");
+            }
+            return string.Empty;
+        }
+        else
+        {
+            return value.ToString();
+        }
     }
 
     protected void SortTable(string columnName)

@@ -32,6 +32,7 @@
                 <th>Searchable</th>
                 <th>Sortable</th>
                 <th>IsRawHtml</th>
+                <th>IsDateTime</th>
                 <th>HasFormat</th>
                 <th>FormatString</th>
                 <th>Remove</th>
@@ -46,6 +47,7 @@
                     <td>@c.Searchable</td>
                     <td>@c.Sortable</td>
                     <td>@c.IsRawHtml</td>
+                    <td>@c.IsDateTime</td>
                     <td>@c.HasFormat</td>
                     <td>@c.FormatString</td>
                     <td>
@@ -99,6 +101,9 @@
             Is raw HTML: <input type="checkbox" @bind="@isRawHtml" @oninput="(e)=>isRawHtml = (bool)e.Value" />
         </div>
         <div>
+            Is datetime: <input type="checkbox" @bind="@isDateTime" @oninput="(e)=>isDateTime = (bool)e.Value" />
+        </div>
+        <div>
             Has format: <input type="checkbox" @bind="@hasFormat" @oninput="(e)=>hasFormat = (bool)e.Value" />
         </div>
         <div>
@@ -130,6 +135,7 @@
     bool searchable;
     bool sortable;
     bool isRawHtml;
+    bool isDateTime;
     bool hasFormat;
     string formatString = "";
     List<DisplayColumn> columns = new();
@@ -154,6 +160,7 @@
             searchable = false;
             sortable = false;
             isRawHtml = false;
+            isDateTime = false;
             hasFormat = false;
             formatString = string.Empty;
             return;
@@ -165,6 +172,7 @@
         searchable = c.Searchable;
         sortable = c.Sortable;
         isRawHtml = c.IsRawHtml;
+        isDateTime = c.IsDateTime;
         hasFormat = c.HasFormat;
         formatString = c.FormatString;
     }
@@ -178,6 +186,7 @@
             columns[editIndex].Searchable = searchable;
             columns[editIndex].Sortable = sortable;
             columns[editIndex].IsRawHtml = isRawHtml;
+            columns[editIndex].IsDateTime = isDateTime;
             columns[editIndex].HasFormat = hasFormat;
             columns[editIndex].FormatString = formatString;
         }
@@ -190,6 +199,7 @@
                 Searchable = searchable,
                 Sortable = sortable,
                 IsRawHtml = isRawHtml,
+                IsDateTime = isDateTime,
                 HasFormat = hasFormat,
                 FormatString = formatString
             });
