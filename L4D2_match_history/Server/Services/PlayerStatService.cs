@@ -3,6 +3,7 @@ using L4D2_match_history.Server.Services.Contract;
 using L4D2_match_history.Shared;
 
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -21,12 +22,14 @@ namespace L4D2_match_history.Server.Services
         private readonly PlayerRankDbContext dbContext;
         private readonly IHttpClientFactory httpClientFactory;
         private readonly IConfiguration configuration;
+        private readonly ILogger<PlayerStatService> logger;
 
-        public PlayerStatService(PlayerRankDbContext dbContext, IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public PlayerStatService(PlayerRankDbContext dbContext, IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<PlayerStatService> logger)
         {
             this.dbContext = dbContext;
             this.httpClientFactory = httpClientFactory;
             this.configuration = configuration;
+            this.logger = logger;
         }
 
         public PlayerRankView GetPlayerRank(string steamId)
@@ -47,9 +50,18 @@ namespace L4D2_match_history.Server.Services
                 {
                     pr.play_style = pr.GetPlayStyle();
                 }
+
                 if (string.IsNullOrEmpty(pr.last_known_alias_unicode))
                 {
-                    pr.last_known_alias_unicode = GetSteamUserName(pr.steam_id64).Result;
+                    try
+                    {
+                        pr.last_known_alias_unicode = GetSteamUserName(pr.steam_id64).Result;
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, "Unable to get unicode name of {0}", pr.last_known_alias);
+                        pr.last_known_alias_unicode = pr.last_known_alias.Normalize();
+                    }
                 }
             }
             this.dbContext.SaveChanges();
