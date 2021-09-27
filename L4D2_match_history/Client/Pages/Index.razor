@@ -54,6 +54,9 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+
+        NavigationManager.NavigateTo("/fetchdatadyn/default");
+
         var res = await Http.GetAsync("MatchInfo");
         if (res.StatusCode == System.Net.HttpStatusCode.NoContent)
         {
@@ -73,6 +76,7 @@ else
         else
         {
             RequestError = res.ReasonPhrase;
+            matchs = new MatchInfo[] { };
         }
     }
 
