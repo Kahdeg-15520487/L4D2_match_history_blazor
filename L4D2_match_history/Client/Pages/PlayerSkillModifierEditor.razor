@@ -31,15 +31,10 @@ else
         </tr>
         @foreach (var psm in playerSkillModifiers)
         {
-            <tr>
+            <tr class="@GetColor(psm)">
                 <td>@psm.name</td>
                 <td @onclick="async () => await OnRequestEdit(psm)">@psm.modifier</td>
-                <td>@psm.update_date.ToLocalTime()</td>
-                <td>
-                    <button @onclick="() => playerSkillModifiers.Remove(psm)">
-                        X
-                    </button>
-                </td>
+                <td>@psm.update_date.ToLocalTime().ToString("dd MMM yyyy hh:mm:ss tt")</td>
             </tr>
         }
     </table>
@@ -49,10 +44,12 @@ else
 @code {
 
     List<PlayerSkillModifier> playerSkillModifiers;
+    List<PlayerSkillModifier> edited;
 
     protected override async Task OnInitializedAsync()
     {
         playerSkillModifiers = await Http.GetFromJsonAsync<List<PlayerSkillModifier>>("PlayerSkillModifier");
+        edited = new List<PlayerSkillModifier>();
     }
 
     private void Add()
@@ -62,8 +59,9 @@ else
 
     private async Task Update()
     {
-        await Http.PostAsJsonAsync<List<PlayerSkillModifier>>("PlayerSkillModifier", playerSkillModifiers);
+        await Http.PostAsJsonAsync<List<PlayerSkillModifier>>("PlayerSkillModifier", edited);
         await JsRuntime.InvokeVoidAsync("alert", "Updated!");
+        playerSkillModifiers = await Http.GetFromJsonAsync<List<PlayerSkillModifier>>("PlayerSkillModifier");
     }
 
     private async Task OnRequestEdit(PlayerSkillModifier psm)
@@ -71,7 +69,21 @@ else
         string prompted = await JsRuntime.InvokeAsync<string>("prompt", $"New modifier for '{psm.name}':", psm.modifier);
         if (float.TryParse(prompted, out float r))
         {
-            psm.modifier = r;
+            if (psm.modifier != r)
+            {
+                psm.modifier = r;
+                edited.Add(psm);
+            }
         }
+    }
+
+    private bool IsEdited(PlayerSkillModifier psm)
+    {
+        return edited.Contains(psm);
+    }
+
+    private string GetColor(PlayerSkillModifier psm)
+    {
+        return IsEdited(psm) ? "edit" : string.Empty;
     }
 }

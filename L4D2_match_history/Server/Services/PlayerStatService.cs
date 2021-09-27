@@ -81,7 +81,7 @@ namespace L4D2_match_history.Server.Services
                 if (exist != null)
                 {
                     exist.modifier = upsm.modifier;
-                    exist.update_date = DateTime.Now;
+                    exist.update_date = DateTime.UtcNow;
                 }
             }
             dbContext.SaveChanges();
