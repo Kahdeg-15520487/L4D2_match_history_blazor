@@ -94,6 +94,7 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
+        playerRanks = await Http.GetFromJsonAsync<PlayerRankView[]>("PlayerRank");
         displayTemplate = await Http.GetFromJsonAsync<DisplayTemplate>($"DisplayTemplate/{displayTemplateName}");
     }
 

@@ -1,0 +1,77 @@
+﻿@page "/psmeditor"
+@using L4D2_match_history.Shared
+
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+
+<style type="text/css">
+    .normal {
+        background-color: white;
+    }
+
+    .edit {
+        background-color: lightskyblue;
+    }
+</style>
+
+<h1>Player Skill Modifiers editor</h1>
+
+@if (playerSkillModifiers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <button @onclick="Update">Update</button>
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Modifier</th>
+            <th>Update date</th>
+        </tr>
+        @foreach (var psm in playerSkillModifiers)
+        {
+            <tr>
+                <td>@psm.name</td>
+                <td @onclick="async () => await OnRequestEdit(psm)">@psm.modifier</td>
+                <td>@psm.update_date.ToLocalTime()</td>
+                <td>
+                    <button @onclick="() => playerSkillModifiers.Remove(psm)">
+                        X
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+    <button @onclick="Add">Add new</button>
+}
+
+@code {
+
+    List<PlayerSkillModifier> playerSkillModifiers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        playerSkillModifiers = await Http.GetFromJsonAsync<List<PlayerSkillModifier>>("PlayerSkillModifier");
+    }
+
+    private void Add()
+    {
+        playerSkillModifiers.Add(PlayerSkillModifier.Default());
+    }
+
+    private async Task Update()
+    {
+        await Http.PostAsJsonAsync<List<PlayerSkillModifier>>("PlayerSkillModifier", playerSkillModifiers);
+        await JsRuntime.InvokeVoidAsync("alert", "Updated!");
+    }
+
+    private async Task OnRequestEdit(PlayerSkillModifier psm)
+    {
+        string prompted = await JsRuntime.InvokeAsync<string>("prompt", $"New modifier for '{psm.name}':", psm.modifier);
+        if (float.TryParse(prompted, out float r))
+        {
+            psm.modifier = r;
+        }
+    }
+}

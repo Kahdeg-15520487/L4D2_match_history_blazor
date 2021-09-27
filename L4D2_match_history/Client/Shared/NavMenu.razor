@@ -16,15 +16,15 @@
             </NavLink>
         </li>*@
         @*<li class="nav-item px-3">
-                <NavLink class="nav-link" href="counter">
-                    <span class="oi oi-plus" aria-hidden="true"></span> Counter
-                </NavLink>
-            </li>
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="fetchdata">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Player Rank
-                </NavLink>
-            </li>*@
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Player Rank
+            </NavLink>
+        </li>*@
         @if (displayTemplates != null)
         {
             @foreach (var dt in displayTemplates)
@@ -41,6 +41,11 @@
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="templateeditor">
                     <span class="oi oi-list-rich" aria-hidden="true"></span> Template Editor
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="psmeditor">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Skill Modifier Editor
                 </NavLink>
             </li>
         }

@@ -39,7 +39,6 @@ namespace L4D2_match_history.Server.Services
 
         public IEnumerable<PlayerRankView> GetPlayerRanks()
         {
-            //this.dbContext.PlayerRanks.ToList();
             foreach (PlayerRank pr in this.dbContext.PlayerRanks)
             {
                 if (string.IsNullOrEmpty(pr.steam_id64))
@@ -66,6 +65,27 @@ namespace L4D2_match_history.Server.Services
             }
             this.dbContext.SaveChanges();
             return this.dbContext.PlayerRankViews.ToList();
+        }
+
+        public IEnumerable<PlayerSkillModifier> GetPlayerSkillModifiers()
+        {
+            return dbContext.PlayerSkillModifiers.ToList();
+        }
+
+        public bool UpdatePlayerSkillModifiers(IEnumerable<PlayerSkillModifier> updatedPlayerSkillModifiers)
+        {
+            var query = dbContext.PlayerSkillModifiers.ToList();
+            foreach (var upsm in updatedPlayerSkillModifiers)
+            {
+                var exist = query.FirstOrDefault(q => q.name == upsm.name);
+                if (exist != null)
+                {
+                    exist.modifier = upsm.modifier;
+                    exist.update_date = DateTime.Now;
+                }
+            }
+            dbContext.SaveChanges();
+            return true;
         }
 
         private async Task<string> GetSteamUserName(string steamid64)

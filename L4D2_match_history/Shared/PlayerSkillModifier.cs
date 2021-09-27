@@ -14,5 +14,10 @@ namespace L4D2_match_history.Shared
             this.modifier = modifier;
             this.update_date = update_date;
         }
+
+        public static PlayerSkillModifier Default()
+        {
+            return new PlayerSkillModifier("default", 0, default(DateTime));
+        }
     }
 }

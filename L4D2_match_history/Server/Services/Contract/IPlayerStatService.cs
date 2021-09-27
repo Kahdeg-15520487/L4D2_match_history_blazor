@@ -11,5 +11,7 @@ namespace L4D2_match_history.Server.Services.Contract
     {
         PlayerRankView GetPlayerRank(string steamId);
         IEnumerable<PlayerRankView> GetPlayerRanks();
+        IEnumerable<PlayerSkillModifier> GetPlayerSkillModifiers();
+        bool UpdatePlayerSkillModifiers(IEnumerable<PlayerSkillModifier> updatedPlayerSkillModifiers);
     }
 }
