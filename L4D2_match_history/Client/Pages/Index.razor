@@ -56,6 +56,7 @@ else
     {
 
         NavigationManager.NavigateTo("/fetchdatadyn/default");
+        return;
 
         var res = await Http.GetAsync("MatchInfo");
         if (res.StatusCode == System.Net.HttpStatusCode.NoContent)
