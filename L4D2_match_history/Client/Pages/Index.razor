@@ -55,8 +55,8 @@ else
     protected override async Task OnInitializedAsync()
     {
 
-        NavigationManager.NavigateTo("/fetchdatadyn/default");
-        return;
+        //NavigationManager.NavigateTo("/fetchdatadyn/default");
+        //return;
 
         var res = await Http.GetAsync("MatchInfo");
         if (res.StatusCode == System.Net.HttpStatusCode.NoContent)

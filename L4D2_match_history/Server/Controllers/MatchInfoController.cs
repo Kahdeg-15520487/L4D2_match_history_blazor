@@ -32,7 +32,7 @@ namespace L4D2_match_history.Server.Controllers
             {
                 return Content($"{{\"lastUpdate\":\"{System.IO.File.GetLastWriteTimeUtc("l4d2plays.json")}\",\"matchs\":{await System.IO.File.ReadAllTextAsync("l4d2plays.json")}}}", "application/json");
             }
-            return NoContent();
+            return Content($"{{\"lastUpdate\":\"{System.IO.File.GetLastWriteTimeUtc("l4d2plays.json")}\",\"matchs\": []}}", "application/json");
         }
 
         [HttpPut]
