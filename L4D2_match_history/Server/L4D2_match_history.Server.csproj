@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\L4D2_match_history.Client.csproj" />
     <ProjectReference Include="..\Shared\L4D2_match_history.Shared.csproj" />
   </ItemGroup>
 

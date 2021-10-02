@@ -1,0 +1,4 @@
+﻿{
+  "apiurl": "http://localhost:5000",
+  "httpsapiurl": "https://localhost:5001"
+}
