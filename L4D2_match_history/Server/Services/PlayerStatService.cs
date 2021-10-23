@@ -20,15 +20,13 @@ namespace L4D2_match_history.Server.Services
     public class PlayerStatService : IPlayerStatService
     {
         private readonly PlayerRankDbContext dbContext;
-        private readonly IHttpClientFactory httpClientFactory;
-        private readonly IConfiguration configuration;
+        private readonly ISteamService steamService;
         private readonly ILogger<PlayerStatService> logger;
 
-        public PlayerStatService(PlayerRankDbContext dbContext, IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<PlayerStatService> logger)
+        public PlayerStatService(PlayerRankDbContext dbContext, ISteamService steamService, ILogger<PlayerStatService> logger)
         {
             this.dbContext = dbContext;
-            this.httpClientFactory = httpClientFactory;
-            this.configuration = configuration;
+            this.steamService = steamService;
             this.logger = logger;
         }
 
@@ -90,34 +88,7 @@ namespace L4D2_match_history.Server.Services
 
         private async Task<string> GetSteamUserName(string steamid64)
         {
-            HttpClient client = httpClientFactory.CreateClient();
-            var res = await client.GetAsync($"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={configuration["steamkey"]}&steamids={steamid64}");
-            if (res.IsSuccessStatusCode)
-            {
-                var rd = await res.Content.ReadAsStringAsync();
-                var d = JsonConvert.DeserializeObject<Root>(rd);
-                return d.response.players[0].personaname;
-            }
-            else
-            {
-                throw new Exception($"{res.StatusCode} : {res.ReasonPhrase} , {await res.Content.ReadAsStringAsync()} ");
-            }
+            return (await steamService.GetSteamPlayer(steamid64))?.personaname;
         }
-    }
-
-    public class Root
-    {
-        public SteamResponse response { get; set; }
-
-    }
-
-    public class SteamResponse
-    {
-        public SteamPlayer[] players { get; set; }
-    }
-
-    public class SteamPlayer
-    {
-        public string personaname { get; set; }
     }
 }

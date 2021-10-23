@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Shared\L4D2_match_history.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\image\" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using L4D2_match_history.Shared
+@inherits LayoutComponentBase
+@inject HttpClient Http
 
 <div class="page">
     <div class="sidebar">
@@ -7,6 +9,19 @@
 
     <div class="main">
         <div class="top-row px-4">
+            @if (steamPlayer != null)
+            {
+                <div class="ml-md-auto ">
+                    @if (string.IsNullOrEmpty(steamPlayer.steamid))
+                    {
+                    <a href="/signin"><img src="/image/sits_01.png" /></a>
+                    }
+                    else
+                    {
+                    <img src="@steamPlayer.avatar" /> @(" ") @steamPlayer.personaname <a class="btn btn-danger" href="/signout"> Signout </a>
+                    }
+                </div>
+            }
             <a href="https://github.com/Kahdeg-15520487/L4D2_match_history_blazor" target="_blank" class="ml-md-auto">About</a>
         </div>
 
@@ -15,3 +30,11 @@
         </div>
     </div>
 </div>
+
+@code{
+    SteamPlayer steamPlayer = null;
+    protected override async Task OnInitializedAsync()
+    {
+        steamPlayer = await Http.GetFromJsonAsync<SteamPlayer>("status");
+    }
+}

@@ -2,6 +2,7 @@ using L4D2_match_history.Server.DAL;
 using L4D2_match_history.Server.Services;
 using L4D2_match_history.Server.Services.Contract;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,9 +33,27 @@ namespace L4D2_match_history.Server
 
             string sqlConnStr = Configuration["connectionstring"];
             services.AddDbContextPool<PlayerRankDbContext>(options => options.UseMySql(sqlConnStr, ServerVersion.AutoDetect(sqlConnStr)));
+            services.AddMemoryCache();
+
+            services.AddTransient<ISteamService, CachedSteamService>();
             services.AddTransient<IUpdateDataService, UpdateDataService>();
             services.AddTransient<IPlayerStatService, PlayerStatService>();
             services.AddTransient<IDisplayTemplateService, DisplayTemplateService>();
+
+            services.AddAuthentication(options =>
+                    {
+                        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    })
+                    .AddCookie(options =>
+                    {
+                        options.LoginPath = "/login";
+                        options.LogoutPath = "/signout";
+                    })
+                    .AddSteam(options =>
+                    {
+                        options.CorrelationCookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None;
+                        options.CorrelationCookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
+                    });
 
             services.AddControllersWithViews();
             services.AddControllers();
@@ -57,10 +76,14 @@ namespace L4D2_match_history.Server
             }
 
             //app.UseHttpsRedirection();
+
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
