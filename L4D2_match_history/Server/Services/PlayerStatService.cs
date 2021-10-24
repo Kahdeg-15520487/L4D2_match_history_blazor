@@ -95,5 +95,10 @@ namespace L4D2_match_history.Server.Services
         {
             return (await steamService.GetSteamPlayer(steamid64))?.personaname;
         }
+
+        public bool IsAdminUser(string steamId64)
+        {
+            return dbContext.adminUsers.FirstOrDefault(au => au.steam_id64 == steamId64) != null;
+        }
     }
 }

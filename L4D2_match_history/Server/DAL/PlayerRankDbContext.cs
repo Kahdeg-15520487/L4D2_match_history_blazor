@@ -8,18 +8,15 @@ namespace L4D2_match_history.Server.DAL
     {
         public DbSet<PlayerRank> PlayerRanks { get; set; }
         public DbSet<PlayerRankView> PlayerRankViews { get; set; }
-
         public DbSet<PlayerSkillModifier> PlayerSkillModifiers { get; set; }
-
         public DbSet<DisplayTemplate> displayTemplates { get; set; }
-
         public DbSet<DisplayColumn> displayColumns { get; set; }
+        public DbSet<AdminUser> adminUsers { get; set; }
 
         public PlayerRankDbContext(DbContextOptions<PlayerRankDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<PlayerRank>().ToTable("STATS_PLAYERS");
             modelBuilder.Entity<PlayerRank>().HasKey(pr => pr.steam_id);
 
@@ -42,6 +39,9 @@ namespace L4D2_match_history.Server.DAL
                         .HasOne(_ => _.Template)
                         .WithMany(_ => _.Columns)
                         .HasForeignKey(_ => _.TemplateName);
+
+            modelBuilder.Entity<AdminUser>().ToTable("ADMIN_USER");
+            modelBuilder.Entity<AdminUser>().HasKey(au => au.steam_id64);
         }
     }
 }

@@ -34,7 +34,22 @@ namespace L4D2_match_history.Server.Controllers
         [HttpGet("{steamId64}")]
         public async Task<ActionResult> GetOne([FromRoute] string steamId64)
         {
-            return Ok(playerStatService.GetPlayerRank(steamId64));
+            var p = playerStatService.GetPlayerRank(steamId64);
+            if (p == null)
+            {
+                return Ok(new object());
+            }
+            else
+            {
+                return Ok(p);
+            }
+        }
+
+        [HttpGet("~/ia/{steamId64}")]
+        public async Task<IActionResult> IsAdmin([FromRoute] string steamId64)
+        {
+            bool isAu = playerStatService.IsAdminUser(steamId64);
+            return Ok(isAu);
         }
     }
 }

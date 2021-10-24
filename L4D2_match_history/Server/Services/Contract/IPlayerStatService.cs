@@ -9,9 +9,10 @@ namespace L4D2_match_history.Server.Services.Contract
 {
     public interface IPlayerStatService
     {
-        PlayerRankView GetPlayerRank(string steamId);
+        PlayerRankView GetPlayerRank(string steamId64);
         IEnumerable<PlayerRankView> GetPlayerRanks();
         IEnumerable<PlayerSkillModifier> GetPlayerSkillModifiers();
         bool UpdatePlayerSkillModifiers(IEnumerable<PlayerSkillModifier> updatedPlayerSkillModifiers);
+        bool IsAdminUser(string steamId64);
     }
 }

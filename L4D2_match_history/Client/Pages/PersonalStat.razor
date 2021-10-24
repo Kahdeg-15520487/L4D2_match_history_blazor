@@ -10,6 +10,11 @@
 {
     <p><em>Loading...</em></p>
 }
+else if (string.IsNullOrEmpty(playerStats.steam_id64))
+{
+    <p><em>Player does not exist!</em></p>
+    <p><em>Người chơi không tồn tại!</em></p>
+}
 else
 {
     <h3>@playerStats.last_known_alias_unicode</h3>

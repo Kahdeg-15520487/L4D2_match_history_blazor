@@ -16,7 +16,7 @@
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <span @onclick="()=> adminMode = !adminMode">a</span>
+    @*<span @onclick="()=> adminMode = !adminMode">a</span>*@
     <ul class="nav flex-column">
         @*<li class="nav-item px-3">
                 <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
@@ -69,11 +69,16 @@
     private bool adminMode = false;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-    private List<DisplayTemplate> displayTemplates;
+    private List<DisplayTemplate> displayTemplates = null;
 
     protected override async Task OnInitializedAsync()
     {
         displayTemplates = await Http.GetFromJsonAsync<List<DisplayTemplate>>("DisplayTemplate");
+        var sp = await Http.GetFromJsonAsync<SteamPlayer>("status");
+        if (!string.IsNullOrEmpty(sp.steamid))
+        {
+            adminMode = await Http.GetFromJsonAsync<bool>($"ia/{sp.steamid}");
+        }
     }
 
     private void ToggleNavMenu()
