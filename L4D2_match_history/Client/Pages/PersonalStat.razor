@@ -17,7 +17,12 @@ else if (string.IsNullOrEmpty(playerStats.steam_id64))
 }
 else
 {
-    <h3>@playerStats.last_known_alias_unicode</h3>
+    <p>
+        @playerStats.last_known_alias_unicode
+        <a href="" @onclick="@(e=>UpdatePlayerSteamName(playerStats.steam_id64))" @onclick:preventDefault>
+            <span class="oi oi-reload"></span>
+        </a>
+    </p>
     <p>Hạng : @playerStats.rank_num</p>
     <p>Điểm : @playerStats.total_points</p>
     <table class="table">
@@ -116,6 +121,8 @@ else
 @code {
     [Parameter]
     public string steamId64 { get; set; }
+    [CascadingParameter]
+    public EventCallback refreshSteamPlayer { get; set; }
 
     PlayerRankView playerStats = null;
     private string SearchPlayer = string.Empty;
@@ -130,8 +137,15 @@ else
         await InitPlayer(steamId64);
     }
 
+    private async Task UpdatePlayerSteamName(string sid)
+    {
+        playerStats = await Http.GetFromJsonAsync<PlayerRankView>($"PlayerRank/refresh/{sid}");
+        await refreshSteamPlayer.InvokeAsync();
+
+    }
+
     private async Task InitPlayer(string sid)
     {
-        playerStats = await Http.GetFromJsonAsync<PlayerRankView>($"PlayerRank/{steamId64}");
+        playerStats = await Http.GetFromJsonAsync<PlayerRankView>($"PlayerRank/{sid}");
     }
 }

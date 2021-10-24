@@ -31,18 +31,18 @@ namespace L4D2_match_history.Server.Controllers
             return Ok(playerStatService.GetPlayerRanks());
         }
 
+        [HttpGet("refresh/{steamId64}")]
+        public async Task<ActionResult> GetRefresh([FromRoute] string steamId64)
+        {
+            var p = playerStatService.GetAndUpdatePlayerRanksWithname(steamId64);
+            return p == null ? Ok(new object()) : Ok(p);
+        }
+
         [HttpGet("{steamId64}")]
         public async Task<ActionResult> GetOne([FromRoute] string steamId64)
         {
             var p = playerStatService.GetPlayerRank(steamId64);
-            if (p == null)
-            {
-                return Ok(new object());
-            }
-            else
-            {
-                return Ok(p);
-            }
+            return p == null ? Ok(new object()) : Ok(p);
         }
 
         [HttpGet("~/ia/{steamId64}")]

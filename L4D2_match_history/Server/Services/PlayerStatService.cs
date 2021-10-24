@@ -45,6 +45,30 @@ namespace L4D2_match_history.Server.Services
             return this.dbContext.PlayerRankViews.ToList();
         }
 
+        public PlayerRankView GetAndUpdatePlayerRanksWithname(string steamId64)
+        {
+            var pr = this.dbContext.PlayerRanks.FirstOrDefault(p => p.steam_id64 == steamId64);
+            if (pr != null)
+            {
+                try
+                {
+                    pr.last_known_alias_unicode = GetSteamUserName(pr.steam_id64, true).Result;
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Unable to get unicode name of {0}", pr.last_known_alias);
+                    pr.last_known_alias_unicode = pr.last_known_alias.Normalize();
+                }
+
+                this.dbContext.SaveChanges();
+                return this.dbContext.PlayerRankViews.FirstOrDefault(p => p.steam_id64 == steamId64);
+            }
+            else
+            {
+                return default;
+            }
+        }
+
         private void ValidatePlayerRankInfo(PlayerRank pr)
         {
             if (string.IsNullOrEmpty(pr.steam_id64))
@@ -91,9 +115,9 @@ namespace L4D2_match_history.Server.Services
             return true;
         }
 
-        private async Task<string> GetSteamUserName(string steamid64)
+        private async Task<string> GetSteamUserName(string steamid64, bool force = false)
         {
-            return (await steamService.GetSteamPlayer(steamid64))?.personaname;
+            return (await steamService.GetSteamPlayer(steamid64, force))?.personaname;
         }
 
         public bool IsAdminUser(string steamId64)

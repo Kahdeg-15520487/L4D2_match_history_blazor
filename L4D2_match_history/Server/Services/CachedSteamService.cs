@@ -27,14 +27,15 @@ namespace L4D2_match_history.Server.Services
             this.httpClientFactory = httpClientFactory;
         }
 
-        public async Task<SteamPlayer> GetSteamPlayer(string steamId64)
+        public async Task<SteamPlayer> GetSteamPlayer(string steamId64, bool force = false)
         {
             if (string.IsNullOrEmpty(steamId64))
             {
                 return null;
             }
 
-            if (!cache.TryGetValue<SteamPlayer>(steamId64, out SteamPlayer player))
+            SteamPlayer player = default;
+            if (force || !cache.TryGetValue<SteamPlayer>(steamId64, out player))
             {
                 HttpClient client = httpClientFactory.CreateClient();
                 var res = await client.GetAsync($"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={configuration["steamkey"]}&steamids={steamId64}");
