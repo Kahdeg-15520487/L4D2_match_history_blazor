@@ -1,5 +1,10 @@
 <body>
 	<script type="text/javascript">
-		window.location.href = "http://" + "kahdeg.ddns.net" + window.location.pathname;
+		if (window.location.pathname === "/L4D2_match_history_blazor/"){
+			window.location.href = "http://" + "kahdeg.ddns.net";
+		}
+		else{
+			window.location.href = "http://" + "kahdeg.ddns.net" + window.location.pathname.replace("/L4D2_match_history_blazor","");
+		}
 	</script>
 </body>
