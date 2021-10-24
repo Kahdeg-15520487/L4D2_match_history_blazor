@@ -30,5 +30,11 @@ namespace L4D2_match_history.Server.Controllers
         {
             return Ok(playerStatService.GetPlayerRanks());
         }
+
+        [HttpGet("{steamId64}")]
+        public async Task<ActionResult> GetOne([FromRoute] string steamId64)
+        {
+            return Ok(playerStatService.GetPlayerRank(steamId64));
+        }
     }
 }

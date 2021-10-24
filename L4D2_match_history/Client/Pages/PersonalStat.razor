@@ -1,0 +1,132 @@
+﻿@page "/personalstat/{steamId64}"
+@using L4D2_match_history.Shared
+@inject HttpClient Http
+
+<h1>Player stats</h1>
+
+<p>Chỉ số người chơi.</p>
+
+@if (playerStats == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h3>@playerStats.last_known_alias_unicode</h3>
+    <p>Hạng : @playerStats.rank_num</p>
+    <p>Điểm : @playerStats.total_points</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tên</td>
+                <td>@playerStats.last_known_alias_unicode</td>
+            </tr>
+            <tr>
+                <td>Steam URL</td>
+                <td> <a href="@($"https://steamcommunity.com/profiles/{playerStats.steam_id64}")" target="_blank">@($"https://steamcommunity.com/profiles/{playerStats.steam_id64}")</a></td>
+            </tr>
+            <tr>
+                <td>Ngày chơi cuối</td>
+                <td>
+                    @if (DateTime.TryParse(playerStats.last_join_date, out DateTime result))
+                    {
+                        @result.ToLocalTime().ToString("dd MMM yyyy hh:mm:ss tt");
+                    }
+                    else
+                    {
+                        @("")
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Số người chơi đã heal</td>
+                <td>@playerStats.survivor_healed</td>
+            </tr>
+            <tr>
+                <td>Số người chơi đã chích điện</td>
+                <td>@playerStats.survivor_defibed</td>
+            </tr>
+            <tr>
+                <td>Số zombie đã giết</td>
+                <td>@playerStats.infected_killed</td>
+            </tr>
+            <tr>
+                <td>Số boomer đã giết</td>
+                <td>@playerStats.boomer_killed</td>
+            </tr>
+            <tr>
+                <td>Số charger đã giết</td>
+                <td>@playerStats.charger_killed</td>
+            </tr>
+            <tr>
+                <td>Số hunter đã giết</td>
+                <td>@playerStats.hunter_killed</td>
+            </tr>
+            <tr>
+                <td>Số jockey đã giết</td>
+                <td>@playerStats.jockey_killed</td>
+            </tr>
+            <tr>
+                <td>Số smoker đã giết</td>
+                <td>@playerStats.smoker_killed</td>
+            </tr>
+            <tr>
+                <td>Số spitter đã giết</td>
+                <td>@playerStats.spitter_killed</td>
+            </tr>
+            <tr>
+                <td>Số witch đã chọc</td>
+                <td>@playerStats.witch_harassed</td>
+            </tr>
+            <tr>
+                <td>Số witch đã giết</td>
+                <td>@playerStats.witch_killed</td>
+            </tr>
+            <tr>
+                <td>Số witch đã 1-shot</td>
+                <td>@playerStats.witch_killed_1shot</td>
+            </tr>
+            <tr>
+                <td>Số tank đã giết</td>
+                <td>@playerStats.tank_killed</td>
+            </tr>
+            <tr>
+                <td>Số lần đập tay đôi với tank</td>
+                <td>@playerStats.tank_melee</td>
+            </tr>
+            <tr>
+                <td>Số còi xe báo động</td>
+                <td>@playerStats.car_alarm</td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public string steamId64 { get; set; }
+
+    PlayerRankView playerStats = null;
+    private string SearchPlayer = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await InitPlayer(steamId64);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await InitPlayer(steamId64);
+    }
+
+    private async Task InitPlayer(string sid)
+    {
+        playerStats = await Http.GetFromJsonAsync<PlayerRankView>($"PlayerRank/{steamId64}");
+    }
+}

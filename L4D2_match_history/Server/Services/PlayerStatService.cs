@@ -30,39 +30,44 @@ namespace L4D2_match_history.Server.Services
             this.logger = logger;
         }
 
-        public PlayerRankView GetPlayerRank(string steamId)
+        public PlayerRankView GetPlayerRank(string steamId64)
         {
-            throw new NotImplementedException();
+            return this.dbContext.PlayerRankViews.FirstOrDefault(p => p.steam_id64 == steamId64);
         }
 
         public IEnumerable<PlayerRankView> GetPlayerRanks()
         {
             foreach (PlayerRank pr in this.dbContext.PlayerRanks)
             {
-                if (string.IsNullOrEmpty(pr.steam_id64))
-                {
-                    pr.steam_id64 = pr.GetSteamId64();
-                }
-                if (string.IsNullOrEmpty(pr.play_style))
-                {
-                    pr.play_style = pr.GetPlayStyle();
-                }
-
-                if (string.IsNullOrEmpty(pr.last_known_alias_unicode))
-                {
-                    try
-                    {
-                        pr.last_known_alias_unicode = GetSteamUserName(pr.steam_id64).Result;
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.LogError(ex, "Unable to get unicode name of {0}", pr.last_known_alias);
-                        pr.last_known_alias_unicode = pr.last_known_alias.Normalize();
-                    }
-                }
+                ValidatePlayerRankInfo(pr);
             }
             this.dbContext.SaveChanges();
             return this.dbContext.PlayerRankViews.ToList();
+        }
+
+        private void ValidatePlayerRankInfo(PlayerRank pr)
+        {
+            if (string.IsNullOrEmpty(pr.steam_id64))
+            {
+                pr.steam_id64 = pr.GetSteamId64();
+            }
+            if (string.IsNullOrEmpty(pr.play_style))
+            {
+                pr.play_style = pr.GetPlayStyle();
+            }
+
+            if (string.IsNullOrEmpty(pr.last_known_alias_unicode))
+            {
+                try
+                {
+                    pr.last_known_alias_unicode = GetSteamUserName(pr.steam_id64).Result;
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Unable to get unicode name of {0}", pr.last_known_alias);
+                    pr.last_known_alias_unicode = pr.last_known_alias.Normalize();
+                }
+            }
         }
 
         public IEnumerable<PlayerSkillModifier> GetPlayerSkillModifiers()

@@ -14,11 +14,11 @@
                 <div class="ml-md-auto ">
                     @if (string.IsNullOrEmpty(steamPlayer.steamid))
                     {
-                    <a href="/signin"><img src="/image/sits_01.png" /></a>
+                        <a href="/signin"><img src="/image/sits_01.png" /></a>
                     }
                     else
                     {
-                    <img src="@steamPlayer.avatar" /> @(" ") @steamPlayer.personaname <a class="btn btn-danger" href="/signout"> Signout </a>
+                        <a href="@($"/personalstat/{steamPlayer.steamid}")"> <img src="@steamPlayer.avatar" /> @(" ")  @steamPlayer.personaname</a> <a class="btn btn-danger" href="/signout"> Signout </a>
                     }
                 </div>
             }
