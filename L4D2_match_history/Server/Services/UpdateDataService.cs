@@ -21,7 +21,7 @@ namespace L4D2_match_history.Server.Services
 {
     public class UpdateDataService : IUpdateDataService
     {
-        public static readonly string DataFile = "/etc/L4D2MI/l4d2plays.json";
+        public static readonly string DataFile = "/var/L4D2MI/l4d2plays.json";
 
         private readonly ILogger<UpdateDataService> logger;
 

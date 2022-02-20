@@ -1,4 +1,5 @@
 ﻿using L4D2_match_history.Server.Services.Contract;
+using L4D2_match_history.Server.Services;
 using L4D2_match_history.Shared;
 
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace L4D2_match_history.Server.Controllers
         {
             if (System.IO.File.Exists(UpdateDataService.DataFile))
             {
-                return Content($"{{\"lastUpdate\":\"{System.IO.File.GetLastWriteTimeUtc("l4d2plays.json")}\",\"matchs\":{await System.IO.File.ReadAllTextAsync("l4d2plays.json")}}}", "application/json");
+                return Content($"{{\"lastUpdate\":\"{System.IO.File.GetLastWriteTimeUtc("l4d2plays.json")}\",\"matchs\":{await System.IO.File.ReadAllTextAsync(UpdateDataService.DataFile)}}}", "application/json");
             }
             return Content($"{{\"lastUpdate\":\"{System.IO.File.GetLastWriteTimeUtc("l4d2plays.json")}\",\"matchs\": []}}", "application/json");
         }
