@@ -370,3 +370,4 @@ data/certbot/
 
 env.list
 l4d2plays.json
+deploy.sh

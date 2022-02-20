@@ -21,6 +21,8 @@ namespace L4D2_match_history.Server.Services
 {
     public class UpdateDataService : IUpdateDataService
     {
+        public static readonly string DataFile = "/etc/L4D2MI/l4d2plays.json";
+
         private readonly ILogger<UpdateDataService> logger;
 
         public UpdateDataService(ILogger<UpdateDataService> logger)
@@ -31,9 +33,9 @@ namespace L4D2_match_history.Server.Services
         public IEnumerable<MatchInfo> UpdateMatchInfos()
         {
             List<MatchInfo> old = null;
-            if (File.Exists("l4d2plays.json"))
+            if (File.Exists(UpdateDataService.DataFile))
             {
-                old = JsonConvert.DeserializeObject<List<MatchInfo>>(File.ReadAllText("l4d2plays.json"));
+                old = JsonConvert.DeserializeObject<List<MatchInfo>>(File.ReadAllText(UpdateDataService.DataFile));
             }
             else
             {
@@ -102,7 +104,7 @@ namespace L4D2_match_history.Server.Services
                 }
                 plays = plays.Concat(old).OrderBy(p => p.PlayDate).ToList();
 
-                File.WriteAllText("l4d2plays.json", JsonConvert.SerializeObject(plays, Formatting.Indented));
+                File.WriteAllText(UpdateDataService.DataFile, JsonConvert.SerializeObject(plays, Formatting.Indented));
 
                 return plays;
             }

@@ -18,18 +18,20 @@ else if (matchs.Length == 0)
 }
 else
 {
+    <p>Number of map played: @mapCount</p>
     <i><span @onclick="Update">Last update @LastUpdate</span></i>
     <table class="table">
-        <thead>
-            <tr>
-                <th><span class="sort-link" @onclick="() => SortTableByDate()">Date <label>@sortDirection</label></span></th>
-                <th>Map<input @bind-value="SearchMap" @bind-value:event="oninput" placeholder="tên map" /></th>
-                <th>Players</th>
-                <th>Video</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var match in filteredMatchs)
+    <thead>
+        <tr>
+            <th><span class="sort-link" @onclick="() => SortTableByDate()">Date <label>@sortDirection</label></span>
+            </th>
+            <th>Map<input @bind-value="SearchMap" @bind-value:event="oninput" placeholder="tên map" /></th>
+            <th>Players</th>
+            <th>Video</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var match in filteredMatchs)
             {
                 <tr>
                     <td>@match.PlayDate.ToShortDateString()</td>
@@ -50,6 +52,7 @@ else
     private bool IsSortedAscending = false;
     private string sortDirection => IsSortedAscending ? "^" : "v";
     private string SearchMap = string.Empty;
+    private int mapCount = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,6 +75,7 @@ else
             LastUpdate = lu.ToLocalTime().ToString("dd MMM yyyy hh:mm:ss tt");
 
             matchs = matchs.OrderByDescending(m => m.PlayDate).ToArray();
+            mapCount = matchs.Count(mi => !mi.MapName.Contains("Replay", StringComparison.InvariantCultureIgnoreCase));
         }
         else
         {
